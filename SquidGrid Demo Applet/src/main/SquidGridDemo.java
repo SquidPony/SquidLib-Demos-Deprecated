@@ -7,11 +7,9 @@ package main;
 import java.awt.event.ActionEvent;
 import squidpony.squidgrid.ConcreteSGTextPanel;
 import java.awt.BorderLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.Random;
 import javax.swing.JApplet;
-import javax.swing.JFrame;
 import squidpony.squidcolor.SColor;
 import squidpony.squidgrid.SGTextDisplay;
 

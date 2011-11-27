@@ -26,7 +26,6 @@ public class TestDriver {
 
     public TestDriver() {
         frame = new JFrame("SquidGrid and SquidColor Demonstration");
-        frame.setIconImage(Toolkit.getDefaultToolkit().createImage("SquidPony SP Icon.png"));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         control = new ControlPanel(rows, columns);
