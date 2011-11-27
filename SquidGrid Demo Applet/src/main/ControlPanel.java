@@ -21,16 +21,17 @@ public class ControlPanel extends javax.swing.JPanel {
 
     /**
      * Allows the setting of the x and y values at construction time.
-     * @param x
-     * @param y 
+     * @param rows
+     * @param columns 
      */
-    public ControlPanel(int x, int y) {
+    public ControlPanel(int rows, int columns) {
         initComponents();
-        this.x = x;
-        this.y = y;
-        this.xField.setText(String.valueOf(x));
-        this.yField.setText(String.valueOf(y));
+        this.rows = rows;
+        this.columns = columns;
+        this.yField.setText(String.valueOf(rows));
+        this.xField.setText(String.valueOf(columns));
         initFontList();
+        validateFontSize();
     }
 
     private void initFontList() {
@@ -162,74 +163,64 @@ public class ControlPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void xFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xFieldActionPerformed
-        validateX();
+        validateRow();
     }//GEN-LAST:event_xFieldActionPerformed
 
     private void yFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yFieldActionPerformed
-        validateY();
+        validateColumn();
     }//GEN-LAST:event_yFieldActionPerformed
 
-    private void validateX() {
-        try {
-            int t = Integer.valueOf(xField.getText());
-            x = t;
-        } catch (NumberFormatException n) {
-            xField.setText("" + x);
-        }
-    }
-
-    private void validateY() {
+    private void validateRow() {
         try {
             int t = Integer.valueOf(yField.getText());
-            y = t;
+            rows = t;
         } catch (NumberFormatException n) {
-            yField.setText("" + y);
+            yField.setText("" + rows);
         }
     }
 
-    private void validateSize() {
+    private void validateColumn() {
+        try {
+            int t = Integer.valueOf(xField.getText());
+            columns = t;
+        } catch (NumberFormatException n) {
+            xField.setText("" + columns);
+        }
+    }
+
+    private void validateFontSize() {
         try {
             int t = Integer.valueOf(sizeField.getText());
-            size = t;
+            fontSize = t;
         } catch (NumberFormatException n) {
-            sizeField.setText("" + size);
+            sizeField.setText("" + fontSize);
         }
     }
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        updateReady = true;
-        validateX();
-        validateY();
-        validateSize();
+        validateRow();
+        validateColumn();
+        validateFontSize();
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void sizeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeFieldActionPerformed
-        validateSize();
+        validateFontSize();
     }//GEN-LAST:event_sizeFieldActionPerformed
 
-    public boolean getUpdateReady() {
-        if (updateReady) {
-            updateReady = false;
-            return true;
-        } else {
-            return false;
-        }
+    public int getRows() {
+        return rows;
     }
 
-    public int getXSize() {
-        return x;
-    }
-
-    public int getYSize() {
-        return y;
+    public int getColumns() {
+        return columns;
     }
 
     public int getFontSize() {
-        return size;
+        return fontSize;
     }
 
     public Font getFontFace() {
-        return new Font((String) fontComboBox.getSelectedItem(), getFontStyle(), size);
+        return new Font((String) fontComboBox.getSelectedItem(), getFontStyle(), fontSize);
     }
 
     private int getFontStyle() {
@@ -258,7 +249,6 @@ public class ControlPanel extends javax.swing.JPanel {
     private javax.swing.JTextField yField;
     // End of variables declaration//GEN-END:variables
     //custom variables
-    private int x = 80, y = 50, size = 14;
-    private boolean updateReady = false;
+    private int rows = 80, columns = 50, fontSize = 14;
     private String fontList[];
 }

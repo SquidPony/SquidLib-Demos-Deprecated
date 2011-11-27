@@ -4,24 +4,27 @@ package main;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import java.awt.event.ActionEvent;
-import squidpony.squidgrid.SGDisplay;
-import squidpony.squidgrid.SGPanel;
+import squidpony.squidgrid.ConcreteSGTextPanel;
 import java.awt.BorderLayout;
-import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.Random;
 import javax.swing.JApplet;
+import javax.swing.JFrame;
+import squidpony.squidcolor.SColor;
+import squidpony.squidgrid.SGTextDisplay;
 
 /**
  *
  * @author SquidPony
  */
 public class SquidGridDemo extends JApplet {
-    SGDisplay display;
+    SGTextDisplay display;
     ControlPanel control;
-    int c = 0, x = 50, y = 30;
+    int columns = 35, rows = 12;
+    Random rng = new Random();
+    SColor foreground, background;
 
     /**
      * Initialization method that will be called after the applet is loaded
@@ -35,47 +38,47 @@ public class SquidGridDemo extends JApplet {
 
     @Override
     public void start() {
-        display = new SGPanel(x, y, new Font("Ariel", Font.PLAIN, 16));
-        add(display.getComponent(), BorderLayout.CENTER);
+        control = new ControlPanel(rows, columns);
+        getContentPane().add(control, BorderLayout.NORTH);
 
-        control = new ControlPanel();
-
-        add(control, BorderLayout.NORTH);
-
-        resize(980, 980);
+        display = new ConcreteSGTextPanel(rows, columns, control.getFontFace());
+        getContentPane().add(display.getComponent(), BorderLayout.SOUTH);
+        resize(getContentPane().getPreferredSize());
 
         changeDisplay();
         repaint();
 
         control.updateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                display.initDisplayByCell(control.getXSize(), control.getYSize(), control.getFontFace());
+                display.initialize(control.getRows(), control.getColumns(), control.getFontFace());
                 changeDisplay();
+                resize(getContentPane().getPreferredSize());
                 repaint();
             }
         });
+
     }
 
     @Override
-    public void stop(){
+    public void stop() {
         control.updateButton.removeActionListener(control.updateButton.getAction());
     }
-    
+
     private void changeDisplay() {
-        Random rng = new Random();
-        c++;
-        for (int i = 0; i < display.getColumns(); i++) {
-            for (int k = 0; k < display.getRows(); k++) {
-//                display.setBlock(k, i, (char) ('A' + c % 26));
+        foreground = SColor.BLACK;
+        background = SColor.WHITE;
+        for (int column = 0; column < display.getColumns(); column++) {
+            for (int row = 0; row < display.getRows(); row++) {
+                if (control.colorizeToggleButton.isSelected()) {
+                    foreground = SColor.FULL_PALLET[rng.nextInt(SColor.FULL_PALLET.length)];
+                    background = SColor.FULL_PALLET[rng.nextInt(SColor.FULL_PALLET.length)];
+                }
                 if (rng.nextBoolean()) {
-//                    display.setBlock(k, i, (char) ('A' + rng.nextInt(26)));
-                    display.setBlock(k, i, (char) ('A' + (i + k) % 26));
+                    display.setBlock(column, row, (char) ('A' + (column + row) % 26), foreground, background);
                 } else {
-//                    display.setBlock(k, i, (char) ('a' + rng.nextInt(26)));
-                    display.setBlock(k, i, (char) ('a' + (i + k) % 26));
+                    display.setBlock(column, row, (char) ('a' + (column + row) % 26), foreground, background);
                 }
             }
         }
-        display.refresh();
     }
 }
