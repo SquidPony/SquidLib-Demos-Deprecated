@@ -1,10 +1,14 @@
 package squidpony.squidcolor;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.TreeMap;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
+import javax.swing.Scrollable;
+import javax.swing.SwingConstants;
 
 /**
  * This demo shows off the gradient methods available in the SColorFactory class.
@@ -12,16 +16,21 @@ import javax.swing.JPanel;
  * @author Eben Howard - http://squidpony.com
  */
 public class ColorMethodsDemo extends javax.swing.JFrame {
-    private SColor[] colors = new SColor[]{SColor.AMBER_DYE};
+    private SColor[] colors = SColor.FULL_PALLET;
     private TreeMap<String, SColor[]> colorMap = new TreeMap<String, SColor[]>();
     private int colorHeight = 20;
     private int colorWidth = 40;
+    private ColorPanel displayPanel = new ColorPanel();
 
     /** Creates new form ColorMethodsDemo */
     public ColorMethodsDemo() {
         initComponents();
-
-        setLocationRelativeTo(null);
+        scrollPane.setViewportView(displayPanel);
+        displayPanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                displayPanelMouseMoved(evt);
+            }
+        });
 
         colorMap.put("Achromatic Series", SColor.ACHROMATIC_SERIES);
         colorMap.put("Blue Green Series", SColor.BLUE_GREEN_SERIES);
@@ -37,6 +46,15 @@ public class ColorMethodsDemo extends javax.swing.JFrame {
 
         colorComboBox.setModel(new DefaultComboBoxModel(colorMap.keySet().toArray()));
         pack();
+        setLocationRelativeTo(null);
+        repaint();
+    }
+    
+    
+    private void refreshPanel() {  
+        scrollPane.getViewport().setViewSize(displayPanel.getPreferredScrollableViewportSize());
+        scrollPane.getViewport().revalidate();
+        pack();
         repaint();
     }
 
@@ -50,10 +68,10 @@ public class ColorMethodsDemo extends javax.swing.JFrame {
     private void initComponents() {
 
         colorComboBox = new javax.swing.JComboBox();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        displayPanel = displayPanel = new ColorPanel();
+        scrollPane = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SColorFactory Methods Demo");
 
         colorComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         colorComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -61,57 +79,15 @@ public class ColorMethodsDemo extends javax.swing.JFrame {
                 colorComboBoxActionPerformed(evt);
             }
         });
-
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
-        displayPanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                displayPanelMouseMoved(evt);
-            }
-        });
-
-        javax.swing.GroupLayout displayPanelLayout = new javax.swing.GroupLayout(displayPanel);
-        displayPanel.setLayout(displayPanelLayout);
-        displayPanelLayout.setHorizontalGroup(
-            displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 541, Short.MAX_VALUE)
-        );
-        displayPanelLayout.setVerticalGroup(
-            displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 330, Short.MAX_VALUE)
-        );
-
-        jScrollPane1.setViewportView(displayPanel);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(colorComboBox, 0, 452, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(colorComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        getContentPane().add(colorComboBox, java.awt.BorderLayout.NORTH);
+        getContentPane().add(scrollPane, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void colorComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorComboBoxActionPerformed
         colors = colorMap.get((String) colorComboBox.getSelectedItem());
-        pack();
-        repaint();
+        refreshPanel();
     }//GEN-LAST:event_colorComboBoxActionPerformed
 
     private void displayPanelMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayPanelMouseMoved
@@ -185,24 +161,21 @@ public class ColorMethodsDemo extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox colorComboBox;
-    private javax.swing.JPanel displayPanel;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane scrollPane;
     // End of variables declaration//GEN-END:variables
 
-    private class ColorPanel extends JPanel {
-        /** Creates new form ColorTestPanel */
+    private class ColorPanel extends JPanel implements Scrollable {
         ColorPanel() {
-            initComponents();
+            super(new FlowLayout());
+        }
+        
+        @Override
+        public Dimension getPreferredSize(){
+            return new Dimension(colorWidth*9, colorHeight*colors.length);
         }
 
         @Override
         public void paintComponent(Graphics g) {
-            Dimension size = new Dimension(jScrollPane1.getViewport().getExtentSize().width, getHeight());
-               size.width = colorWidth * 9;
-            size.height = colorHeight * colors.length;
-            setSize(size);//get rid of rounding extra space
-            setMinimumSize(size);
-            setPreferredSize(size);
             super.paintComponent(g);
             int x = 0;
             int y = 0;
@@ -254,15 +227,37 @@ public class ColorMethodsDemo extends javax.swing.JFrame {
             }
         }
 
-        private void initComponents() {
-            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-            this.setLayout(layout);
-            layout.setHorizontalGroup(
-                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGap(0, 400, Short.MAX_VALUE));
-            layout.setVerticalGroup(
-                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGap(0, 300, Short.MAX_VALUE));
+        @Override
+        public Dimension getPreferredScrollableViewportSize() {
+            return new Dimension(colorWidth*9, Math.min(400, colorHeight*colors.length));
+        }
+
+        @Override
+        public int getScrollableUnitIncrement(Rectangle rctngl, int i, int i1) {
+            if (i == SwingConstants.VERTICAL) {
+                return colorHeight;
+            } else {
+                return colorWidth;
+            }
+        }
+
+        @Override
+        public int getScrollableBlockIncrement(Rectangle rctngl, int i, int i1) {
+            if (i == SwingConstants.VERTICAL) {
+                return colorHeight * 5;
+            } else {
+                return colorWidth * 3;
+            }
+        }
+
+        @Override
+        public boolean getScrollableTracksViewportWidth() {
+            return false;
+        }
+
+        @Override
+        public boolean getScrollableTracksViewportHeight() {
+            return false;
         }
     }
 }
