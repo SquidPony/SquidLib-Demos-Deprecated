@@ -13,19 +13,19 @@ import squidpony.squidgrid.gui.SGTextPanel;
  *
  * @author Eben Howard - http://squidpony.com
  */
-public class SquidGridDemo {
-    SGTextPanel display;
-    JFrame frame;
-    squidpony.squidgrid.ControlPanel control;
-    int width = 35, height = 12;
-    Random rng = new Random();
-    SColor foreground, background;
+public class FontChoiceDemo {
+    private SGTextPanel display;
+    private JFrame frame;
+    private FontChoiceControlPanel control;
+    private int width = 35, height = 12;
+    private Random rng = new Random();
+    private SColor foreground, background;
 
-    public SquidGridDemo() {
-        frame = new JFrame("SquidGrid and SquidColor Demonstration");
+    public FontChoiceDemo() {
+        frame = new JFrame("SquidGrid and SquidColor Font Choice Demonstration");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        control = new squidpony.squidgrid.ControlPanel(width, height);
+        control = new squidpony.squidgrid.FontChoiceControlPanel(width, height);
         frame.getContentPane().add(control, BorderLayout.NORTH);
 
         display = new SGTextPanel(width, height, control.getFontFace());
@@ -71,6 +71,6 @@ public class SquidGridDemo {
     }
 
     public static void main(String... args) {
-        new SquidGridDemo();
+        new FontChoiceDemo();
     }
 }

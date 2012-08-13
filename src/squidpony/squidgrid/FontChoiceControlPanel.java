@@ -1,7 +1,7 @@
 package squidpony.squidgrid;
 
 /*
- * ControlPanel.java
+ * FontChoiceControlPanel.java
  *
  * Created on Dec 5, 2009, 11:58:20 PM
  */
@@ -12,9 +12,9 @@ import java.awt.GraphicsEnvironment;
  *
  * @author Eben
  */
-public class ControlPanel extends javax.swing.JPanel {
-    /** Creates new form ControlPanel */
-    public ControlPanel() {
+public class FontChoiceControlPanel extends javax.swing.JPanel {
+    /** Creates new form FontChoiceControlPanel */
+    public FontChoiceControlPanel() {
         initComponents();
         initFontList();
     }
@@ -24,7 +24,7 @@ public class ControlPanel extends javax.swing.JPanel {
      * @param rows
      * @param columns 
      */
-    public ControlPanel(int rows, int columns) {
+    public FontChoiceControlPanel(int rows, int columns) {
         initComponents();
         this.rows = rows;
         this.columns = columns;
