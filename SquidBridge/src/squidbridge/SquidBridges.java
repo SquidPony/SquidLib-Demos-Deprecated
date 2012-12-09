@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import squidpony.squidcolor.SColor;
+import squidpony.squidcolor.SColorFactory;
 import squidpony.squidgrid.gui.ImageCellFactory;
 import squidpony.squidgrid.gui.SGTextAndImagePanel;
 import squidpony.squidgrid.util.Direction;
@@ -62,6 +63,10 @@ public class SquidBridges extends JFrame implements MouseListener, MouseMotionLi
                 imageReplacements.add('H');
                 imageReplacements.add('-');
                 imageReplacements.add('=');
+                for (int i = 1; i <= 8; i++) {
+                    icf.addImage(String.valueOf(i), ImageIO.read(new File("./images/island" + i + ".png")));
+                    imageReplacements.add((char) ('0' + i));
+                }
             } catch (IOException ex) {
                 imagesLoaded = false;
             }
@@ -134,6 +139,9 @@ public class SquidBridges extends JFrame implements MouseListener, MouseMotionLi
 
                 }
                 if (imagesLoaded && imageReplacements.contains(c)) {
+                    if(board.isLocked(x, y)){
+                        back = SColorFactory.blend(SColorFactory.lighter(SColor.BURNT_UMBER), SColor.BEIGE, 0.7);
+                    }
                     display.placeImage(x, y, String.valueOf(c), back);
                 } else {
                     display.placeCharacter(x, y, c, front, back);
