@@ -6,11 +6,11 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import javax.swing.event.MouseInputListener;
 import squidpony.squidcolor.SColor;
 import squidpony.squidgrid.gui.SGTextAndImagePanel;
 import squidpony.squidgrid.util.Direction;
@@ -23,11 +23,11 @@ import squidpony.squidgrid.util.Direction;
  *
  * @author Eben Howard - http://squidpony.com
  */
-public class MovingCharactersDemo implements MouseListener {
+public class MovingCharactersDemo {
 
     private SGTextAndImagePanel display;//uses SGTextAndImagePanel instead of SGTextPanel in order to show it's usable as an in-place replacement/extension
     private JFrame frame;
-    private static char[][] map = new char[][]{//in order to be in line with GUI coordinate pairs, this appears to be sideways and upside down in this style constructor.
+    private static char[][] map = new char[][]{//in order to be in line with GUI coordinate pairs, this appears to be sideways in this style constructor.
         {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
         {'#', '.', '.', '.', ' ', '.', '.', '.', ' ', '.', '.', '#'},
         {'#', '.', '.', '.', 's', '.', '.', '.', 'S', '.', '.', '#'},
@@ -79,7 +79,7 @@ public class MovingCharactersDemo implements MouseListener {
     }
 
     private void go() {
-        display.addMouseListener(this);
+        display.addMouseListener(new DemoInputListener());
     }
 
     private SColor getRandomColor() {
@@ -118,29 +118,40 @@ public class MovingCharactersDemo implements MouseListener {
         display.refresh();
     }
 
-    @Override
-    public void mouseClicked(MouseEvent me) {
-        if (spawning) {
-            spawning = false;
-        } else {
-            spawning = true;
+    private class DemoInputListener implements MouseInputListener {
+
+        @Override
+        public void mouseClicked(MouseEvent me) {
+            if (spawning) {
+                spawning = false;
+            } else {
+                spawning = true;
+            }
         }
-    }
 
-    @Override
-    public void mousePressed(MouseEvent me) {
-    }
+        @Override
+        public void mousePressed(MouseEvent me) {
+        }
 
-    @Override
-    public void mouseReleased(MouseEvent me) {
-    }
+        @Override
+        public void mouseReleased(MouseEvent me) {
+        }
 
-    @Override
-    public void mouseEntered(MouseEvent me) {
-    }
+        @Override
+        public void mouseEntered(MouseEvent me) {
+        }
 
-    @Override
-    public void mouseExited(MouseEvent me) {
+        @Override
+        public void mouseExited(MouseEvent me) {
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+        }
     }
 
     private class Spawner implements ActionListener {
