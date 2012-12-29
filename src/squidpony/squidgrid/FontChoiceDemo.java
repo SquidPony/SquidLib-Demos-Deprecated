@@ -15,9 +15,9 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import squidpony.squidcolor.SColor;
 import squidpony.squidgrid.gui.SGTextPanel;
+import squidpony.squidgrid.gui.TextCellFactory;
 
 /**
  * Demonstrates some of the capabilities of the squidpony.squidgrid package.
@@ -27,7 +27,6 @@ import squidpony.squidgrid.gui.SGTextPanel;
 public class FontChoiceDemo {
 
     private SGTextPanel display;
-    private String text = "";
     private JMenu menu;
     private JFrame frame;
     private FontChoiceControlPanel control;
@@ -43,16 +42,7 @@ public class FontChoiceDemo {
         JMenuBar bar = new JMenuBar();
         menu = new JMenu("Tools");
         bar.add(menu);
-        JMenuItem tempItem = new JMenuItem("Input Text");
-        tempItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getText();
-            }
-        });
-        menu.add(tempItem);
-
-        tempItem = new JMenuItem("Save Image");
+        JMenuItem tempItem = new JMenuItem("Save Image");
         tempItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -77,22 +67,22 @@ public class FontChoiceDemo {
         control.updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                if (control.cellSzieBox.isSelected()) {
-                    display.initialize(control.getCellWidth(), control.getCellHeight(), control.getRows(), control.getColumns(), control.getFontFace());
+                control.validateInput();
+                TextCellFactory.getInstance().setAntialias(control.antialiasBox.isSelected());
+                char[] chars = control.inputTextArea.getText().toCharArray();
+                if (chars.length > 0) {
+                    display.ensureFits(chars, control.whiteSpaceBox.isSelected());
+                }
+                if (control.cellSizeBox.isSelected()) {
+                    display.initialize(control.getCellWidth(), control.getCellHeight(), control.getGridWidth(), control.getGridHeight(), control.getFontFace());
                 } else {
-                    display.initialize(control.getRows(), control.getColumns(), control.getFontFace());
+                    display.initialize(control.getGridWidth(), control.getGridHeight(), control.getFontFace());
                 }
                 changeDisplay();
             }
         });
 
-    }
-
-    /**
-     * Gets user input text from a popup dialog.
-     */
-    private void getText() {
-        text = (String) JOptionPane.showInputDialog(frame, "Input Text", "Customize Text", JOptionPane.PLAIN_MESSAGE, null, null, "");
+        control.validateInput();
         changeDisplay();
     }
 
@@ -115,11 +105,10 @@ public class FontChoiceDemo {
      * Uses the information in the control panel to update the display.
      */
     private void changeDisplay() {
-        foreground = SColor.BLACK;
-        background = SColor.WHITE;
-        if (text.length() > 0) {
-            char[] chars = text.toCharArray();
-            display.ensureFits(chars, control.whiteSpaceBox.isSelected());
+        foreground = control.foreground;
+        background = control.background;
+        char[] chars = control.inputTextArea.getText().toCharArray();
+        if (chars.length > 0) {
             int position = 0;
             for (int y = 0; y < display.getGridHeight(); y++) {
                 for (int x = 0; x < display.getGridWidth(); x++) {

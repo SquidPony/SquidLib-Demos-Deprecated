@@ -7,6 +7,8 @@ package squidpony.squidgrid;
  */
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import javax.swing.JColorChooser;
+import squidpony.squidcolor.SColor;
 
 /**
  *
@@ -19,21 +21,25 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
      */
     public FontChoiceControlPanel() {
         initComponents();
+        foregroundButton.setForeground(foreground);
+        foregroundButton.setOpaque(true);
+        backgroundButton.setForeground(background);
+        backgroundButton.setOpaque(true);
         initFontList();
     }
 
     /**
      * Allows the setting of the x and y values at construction time.
      *
-     * @param rows
-     * @param columns
+     * @param gridHeight
+     * @param gridWidth
      */
-    public FontChoiceControlPanel(int rows, int columns) {
+    public FontChoiceControlPanel(int gridWidth, int gridHeight) {
         initComponents();
-        this.rows = rows;
-        this.columns = columns;
-        this.yField.setText(String.valueOf(rows));
-        this.xField.setText(String.valueOf(columns));
+        this.rows = gridHeight;
+        this.columns = gridWidth;
+        this.yField.setText(String.valueOf(gridHeight));
+        this.xField.setText(String.valueOf(gridWidth));
         initFontList();
         validateFontSize();
     }
@@ -62,40 +68,42 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        xField = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        yField = new javax.swing.JTextField();
         updateButton = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel2 = new javax.swing.JLabel();
-        sizeField = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        yField = new javax.swing.JTextField();
+        heightField = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        xField = new javax.swing.JTextField();
+        cellSizeBox = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
+        widthField = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        startRangeField = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        endRangeField = new javax.swing.JTextField();
+        generateButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        inputTextArea = new javax.swing.JTextArea();
+        jPanel6 = new javax.swing.JPanel();
         fontComboBox = new javax.swing.JComboBox();
+        sizeField = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         boldCheckBox = new javax.swing.JCheckBox();
         italicsCheckBox = new javax.swing.JCheckBox();
-        colorizeToggleButton = new javax.swing.JToggleButton();
-        widthField = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        heightField = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        whiteSpaceBox = new javax.swing.JCheckBox();
+        antialiasBox = new javax.swing.JCheckBox();
         jLabel6 = new javax.swing.JLabel();
         foregroundButton = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         backgroundButton = new javax.swing.JButton();
-        cellSzieBox = new javax.swing.JCheckBox();
-        whiteSpaceBox = new javax.swing.JCheckBox();
+        colorizeToggleButton = new javax.swing.JToggleButton();
 
         setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        xField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        xField.setText("30");
-        xField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                xFieldActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("X");
+        updateButton.setText("Update");
 
         yField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         yField.setText("20");
@@ -105,33 +113,29 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
             }
         });
 
-        updateButton.setText("Update");
-        updateButton.addActionListener(new java.awt.event.ActionListener() {
+        heightField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        heightField.setText("24");
+        heightField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateButtonActionPerformed(evt);
+                heightFieldActionPerformed(evt);
             }
         });
 
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jLabel3.setText("X");
 
-        jLabel2.setText("Font Size:");
+        jLabel4.setText("Grid Size:");
 
-        sizeField.setText("24");
-        sizeField.addActionListener(new java.awt.event.ActionListener() {
+        xField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        xField.setText("30");
+        xField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sizeFieldActionPerformed(evt);
+                xFieldActionPerformed(evt);
             }
         });
 
-        fontComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cellSizeBox.setText("Force Cell Size");
 
-        boldCheckBox.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        boldCheckBox.setText("BOLD");
-
-        italicsCheckBox.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
-        italicsCheckBox.setText("Italics");
-
-        colorizeToggleButton.setText("Random Colors");
+        jLabel1.setText("X");
 
         widthField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         widthField.setText("24");
@@ -141,115 +145,211 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel3.setText("X");
+        jLabel5.setText("Cell Size:");
 
-        heightField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        heightField.setText("24");
-        heightField.addActionListener(new java.awt.event.ActionListener() {
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(xField, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(yField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(cellSizeBox)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(jLabel5)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(widthField, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel3)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(heightField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(xField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(yField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(widthField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(heightField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cellSizeBox))
+        );
+
+        jLabel8.setText("UTF-16 Range:");
+
+        startRangeField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        startRangeField.setText("0x20");
+
+        jLabel9.setText("to");
+
+        endRangeField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        endRangeField.setText("0x7E");
+
+        generateButton.setText("Generate");
+        generateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                heightFieldActionPerformed(evt);
+                generateButtonActionPerformed(evt);
             }
         });
 
-        jLabel4.setText("Grid Size:");
+        inputTextArea.setColumns(20);
+        inputTextArea.setRows(5);
+        jScrollPane1.setViewportView(inputTextArea);
 
-        jLabel5.setText("Cell Size:");
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(startRangeField, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(endRangeField, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(generateButton))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(startRangeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(endRangeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(generateButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+        );
+
+        fontComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        sizeField.setText("24");
+        sizeField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sizeFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Font Size:");
+
+        boldCheckBox.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        boldCheckBox.setText("BOLD");
+
+        italicsCheckBox.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        italicsCheckBox.setText("Italics");
+
+        whiteSpaceBox.setText("White Space");
+
+        antialiasBox.setSelected(true);
+        antialiasBox.setText("Antialias");
 
         jLabel6.setText("Background:");
 
         foregroundButton.setText("...");
+        foregroundButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                foregroundButtonActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Foreground");
 
         backgroundButton.setText("...");
+        backgroundButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backgroundButtonActionPerformed(evt);
+            }
+        });
 
-        cellSzieBox.setText("Force Cell Size");
+        colorizeToggleButton.setText("Random Colors");
 
-        whiteSpaceBox.setText("White Space");
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(sizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fontComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(boldCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(italicsCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(whiteSpaceBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(antialiasBox))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(foregroundButton, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(backgroundButton, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(colorizeToggleButton))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(sizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fontComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(boldCheckBox)
+                    .addComponent(italicsCheckBox)
+                    .addComponent(whiteSpaceBox)
+                    .addComponent(antialiasBox))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(foregroundButton)
+                    .addComponent(jLabel7)
+                    .addComponent(backgroundButton)
+                    .addComponent(colorizeToggleButton)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(xField, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(yField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(widthField, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(heightField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(sizeField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fontComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(boldCheckBox)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(italicsCheckBox)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(whiteSpaceBox))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(cellSzieBox)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(foregroundButton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(backgroundButton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(colorizeToggleButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(updateButton))))
+                .addComponent(updateButton))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(xField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(yField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(sizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fontComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(boldCheckBox)
-                    .addComponent(italicsCheckBox)
-                    .addComponent(jLabel4)
-                    .addComponent(whiteSpaceBox))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(widthField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3)
-                        .addComponent(heightField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cellSzieBox)
-                        .addComponent(jLabel6)
-                        .addComponent(foregroundButton)
-                        .addComponent(jLabel7)
-                        .addComponent(backgroundButton)
-                        .addComponent(colorizeToggleButton)
-                        .addComponent(updateButton))))
-            .addComponent(jSeparator1)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(updateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -263,7 +363,7 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
 
     private void validateRow() {
         try {
-            int t = Integer.valueOf(yField.getText());
+            int t = Integer.parseInt(yField.getText());
             rows = t;
         } catch (NumberFormatException n) {
             yField.setText("" + rows);
@@ -272,7 +372,7 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
 
     private void validateColumn() {
         try {
-            int t = Integer.valueOf(xField.getText());
+            int t = Integer.parseInt(xField.getText());
             columns = t;
         } catch (NumberFormatException n) {
             xField.setText("" + columns);
@@ -281,7 +381,7 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
 
     private void validateCellWidth() {
         try {
-            int t = Integer.valueOf(widthField.getText());
+            int t = Integer.parseInt(widthField.getText());
             cellWidth = t;
         } catch (NumberFormatException n) {
             widthField.setText("" + cellWidth);
@@ -290,7 +390,7 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
 
     private void validateCellHeight() {
         try {
-            int t = Integer.valueOf(heightField.getText());
+            int t = Integer.parseInt(heightField.getText());
             cellHeight = t;
         } catch (NumberFormatException n) {
             xField.setText("" + cellHeight);
@@ -299,20 +399,38 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
 
     private void validateFontSize() {
         try {
-            int t = Integer.valueOf(sizeField.getText());
+            int t = Integer.parseInt(sizeField.getText());
             fontSize = t;
         } catch (NumberFormatException n) {
             sizeField.setText("" + fontSize);
         }
     }
 
-    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+    private void validateStartRange() {
+        try {
+            int t = Integer.parseInt(startRangeField.getText().substring(2), 16);//evaluate as a hex value
+            startRange = t;
+        } catch (NumberFormatException n) {
+            startRangeField.setText("0x" + Integer.toHexString(startRange));
+        }
+    }
+
+    private void validateEndRange() {
+        try {
+            int t = Integer.parseInt(endRangeField.getText().substring(2), 16);//evaluate as a hex value
+            endRange = t;
+        } catch (NumberFormatException n) {
+            endRangeField.setText("0x" + Integer.toHexString(endRange));
+        }
+    }
+
+    public void validateInput() {
         validateRow();
         validateColumn();
         validateCellWidth();
         validateCellHeight();
         validateFontSize();
-    }//GEN-LAST:event_updateButtonActionPerformed
+    }
 
     private void sizeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeFieldActionPerformed
         validateFontSize();
@@ -326,19 +444,39 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
         validateCellHeight();
     }//GEN-LAST:event_heightFieldActionPerformed
 
-    public int getRows() {
+    private void foregroundButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_foregroundButtonActionPerformed
+        background = new SColor(JColorChooser.showDialog(this, "Choose Background Color", background));
+    }//GEN-LAST:event_foregroundButtonActionPerformed
+
+    private void backgroundButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backgroundButtonActionPerformed
+        foreground = new SColor(JColorChooser.showDialog(this, "Choose Foreground Color", foreground));
+    }//GEN-LAST:event_backgroundButtonActionPerformed
+
+    private void generateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateButtonActionPerformed
+        validateStartRange();
+        validateEndRange();
+        String s = "";
+        for (int codepoint = startRange; codepoint <= endRange; codepoint++) {
+            for (char c : Character.toChars(codepoint)) {
+                s += c;
+            }
+        }
+        inputTextArea.setText(s);
+    }//GEN-LAST:event_generateButtonActionPerformed
+
+    public int getGridHeight() {
         return rows;
     }
 
-    public int getColumns() {
+    public int getGridWidth() {
         return columns;
     }
-    
-    public int getCellWidth(){
+
+    public int getCellWidth() {
         return cellWidth;
     }
-    
-    public int getCellHeight(){
+
+    public int getCellHeight() {
         return cellHeight;
     }
 
@@ -347,7 +485,8 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
     }
 
     public Font getFontFace() {
-        return new Font((String) fontComboBox.getSelectedItem(), getFontStyle(), fontSize);
+        Font font = new Font((String) fontComboBox.getSelectedItem(), getFontStyle(), fontSize);
+        return font;
     }
 
     private int getFontStyle() {
@@ -363,13 +502,17 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JCheckBox antialiasBox;
     private javax.swing.JButton backgroundButton;
     private javax.swing.JCheckBox boldCheckBox;
-    public javax.swing.JCheckBox cellSzieBox;
+    public javax.swing.JCheckBox cellSizeBox;
     public javax.swing.JToggleButton colorizeToggleButton;
+    private javax.swing.JTextField endRangeField;
     private javax.swing.JComboBox fontComboBox;
     private javax.swing.JButton foregroundButton;
+    private javax.swing.JButton generateButton;
     private javax.swing.JTextField heightField;
+    public javax.swing.JTextArea inputTextArea;
     private javax.swing.JCheckBox italicsCheckBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -378,8 +521,14 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField sizeField;
+    private javax.swing.JTextField startRangeField;
     public javax.swing.JButton updateButton;
     public javax.swing.JCheckBox whiteSpaceBox;
     private javax.swing.JTextField widthField;
@@ -387,6 +536,7 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
     private javax.swing.JTextField yField;
     // End of variables declaration//GEN-END:variables
     //custom variables
-    private int rows = 80, columns = 50, cellWidth = 24, cellHeight = 24, fontSize = 34;
+    private int rows = 80, columns = 50, cellWidth = 24, cellHeight = 24, fontSize = 34, startRange = 0x20, endRange = 0x7E;
     private String fontList[];
+    public SColor foreground = SColor.BLACK, background = SColor.WHITE;
 }
