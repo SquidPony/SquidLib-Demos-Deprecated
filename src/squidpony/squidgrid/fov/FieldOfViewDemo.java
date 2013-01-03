@@ -44,7 +44,7 @@ public class FieldOfViewDemo {
     private DemoCell[][] map;
     private int width = DEFAULT_MAP.length, height = DEFAULT_MAP[0].length;
     private int cellWidth, cellHeight;
-    private FOVSolver fov = new SpiralFOV();
+    private FOVSolver fov = new ShadowFOV();
     private LOSSolver los = new BresenhamLOS();
     private SColor litNear = SColorFactory.lightest(SColor.LIGHT_YELLOW_DYE),
             litFar = SColor.ORANGUTAN,
