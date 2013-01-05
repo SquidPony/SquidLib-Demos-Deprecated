@@ -1,8 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package squidpony.squidgrid.fov;
+
+import java.util.TreeMap;
 
 /**
  *
@@ -10,11 +8,26 @@ package squidpony.squidgrid.fov;
  */
 public class FOVDemoPanel extends javax.swing.JPanel {
 
+    TreeMap<String, FOVSolver> fovs = new TreeMap<String, FOVSolver>();
+
     /**
      * Creates new form FOVDemoPanel
      */
     public FOVDemoPanel() {
         initComponents();
+        fovs.put("Shadow Casting", new ShadowFOV());
+        fovs.put("Spiral", new SpiralFOV());
+        fovs.put("Ray Casting", new RayCastingFOV());
+
+        fovComboBox.removeAllItems();
+        for (String s : fovs.keySet()) {
+            fovComboBox.addItem(s);
+        }
+        fovComboBox.setSelectedIndex(0);
+    }
+
+    public FOVSolver getFOVSolver() {
+        return fovs.get((String) fovComboBox.getSelectedItem());
     }
 
     /**
@@ -27,14 +40,14 @@ public class FOVDemoPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
+        fovComboBox = new javax.swing.JComboBox();
+        clearBox = new javax.swing.JButton();
 
         jLabel1.setText("FOV Solver");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        fovComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton1.setText("Clear FOV");
+        clearBox.setText("Clear FOV");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -44,10 +57,10 @@ public class FOVDemoPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fovComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap(409, Short.MAX_VALUE))
+                .addComponent(clearBox)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -55,14 +68,14 @@ public class FOVDemoPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addContainerGap(57, Short.MAX_VALUE))
+                    .addComponent(fovComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(clearBox))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox1;
+    public javax.swing.JButton clearBox;
+    private javax.swing.JComboBox fovComboBox;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

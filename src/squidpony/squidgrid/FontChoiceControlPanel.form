@@ -26,11 +26,18 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jSeparator2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="jSeparator3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="updateButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -40,6 +47,9 @@
           <Component id="jPanel1" max="32767" attributes="0"/>
           <Component id="jPanel4" alignment="0" max="32767" attributes="0"/>
           <Component id="updateButton" max="32767" attributes="0"/>
+          <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
+          <Component id="jSeparator2" alignment="0" pref="74" max="32767" attributes="0"/>
+          <Component id="jSeparator3" alignment="0" pref="74" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -60,22 +70,22 @@
               <Group type="102" attributes="0">
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="xField" min="-2" pref="27" max="-2" attributes="0"/>
+                  <Component id="gridWidthField" min="-2" pref="27" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="yField" min="-2" pref="26" max="-2" attributes="0"/>
+                  <Component id="gridHeightField" min="-2" pref="26" max="-2" attributes="0"/>
               </Group>
               <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                   <Component id="cellSizeBox" min="-2" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="widthField" min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="cellWidthField" min="-2" pref="27" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="heightField" min="-2" pref="26" max="-2" attributes="0"/>
+                      <Component id="cellHeightField" min="-2" pref="26" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -84,16 +94,16 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="xField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="gridWidthField" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="yField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="gridHeightField" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="widthField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cellWidthField" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="heightField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cellHeightField" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -103,23 +113,26 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="yField">
+        <Component class="javax.swing.JTextField" name="gridHeightField">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" value="20"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="yFieldActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="gridHeightFieldActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="heightField">
+        <Component class="javax.swing.JTextField" name="cellHeightField">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" value="24"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="heightFieldActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cellHeightFieldActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -131,13 +144,13 @@
             <Property name="text" type="java.lang.String" value="Grid Size:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="xField">
+        <Component class="javax.swing.JTextField" name="gridWidthField">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" value="30"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="xFieldActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="gridWidthFieldActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="cellSizeBox">
@@ -153,14 +166,17 @@
             <Property name="text" type="java.lang.String" value="X"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="widthField">
+        <Component class="javax.swing.JTextField" name="cellWidthField">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" value="24"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="widthFieldActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cellWidthFieldActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
@@ -261,22 +277,6 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="sizeField" min="-2" pref="32" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="fontComboBox" max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" attributes="0">
-                  <Component id="boldCheckBox" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="italicsCheckBox" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="whiteSpaceBox" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="antialiasBox" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" attributes="0">
                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="foregroundButton" min="-2" pref="19" max="-2" attributes="0"/>
@@ -285,7 +285,29 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="backgroundButton" min="-2" pref="19" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="colorizeToggleButton" min="-2" max="-2" attributes="0"/>
+                  <Component id="colorizeToggleButton" max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="fontSizeField" min="-2" pref="32" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="fontComboBox" min="-2" pref="172" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="boldCheckBox" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="italicsCheckBox" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="whiteSpaceBox" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="antialiasBox" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace pref="6" max="32767" attributes="0"/>
+                  <Component id="loadFontButton" min="-2" pref="21" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -294,8 +316,9 @@
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="sizeField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="fontSizeField" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="fontComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="loadFontButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -329,13 +352,16 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="sizeField">
+        <Component class="javax.swing.JTextField" name="fontSizeField">
           <Properties>
             <Property name="text" type="java.lang.String" value="24"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sizeFieldActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fontSizeFieldActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -409,7 +435,30 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
+        <Component class="javax.swing.JButton" name="loadFontButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="..."/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loadFontButtonActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JSeparator" name="jSeparator1">
+      <Properties>
+        <Property name="orientation" type="int" value="1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSeparator" name="jSeparator2">
+      <Properties>
+        <Property name="orientation" type="int" value="1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSeparator" name="jSeparator3">
+      <Properties>
+        <Property name="orientation" type="int" value="1"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

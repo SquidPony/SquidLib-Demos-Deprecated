@@ -44,7 +44,6 @@ public class FieldOfViewDemo {
     private DemoCell[][] map;
     private int width = DEFAULT_MAP.length, height = DEFAULT_MAP[0].length;
     private int cellWidth, cellHeight;
-    private FOVSolver fov = new ShadowFOV();
     private LOSSolver los = new BresenhamLOS();
     private SColor litNear = SColorFactory.lightest(SColor.LIGHT_YELLOW_DYE),
             litFar = SColor.ORANGUTAN,
@@ -52,6 +51,7 @@ public class FieldOfViewDemo {
     private boolean lightBackground = false;//if true then the defaultForeground will be used for objects and the background will be lit
     private float lightForce = 1.1f, //controls how far the light will spread
             lightAdjustment = 0.4f; //controls how much the light will change the appearance of objects
+    private FOVDemoPanel panel;
 
     public static void main(String... args) {
         new FieldOfViewDemo();
@@ -77,6 +77,10 @@ public class FieldOfViewDemo {
 
         frame = new JFrame("SquidGrid Field of View Demonstration");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
+
+        panel = new FOVDemoPanel();
+        frame.add(panel, BorderLayout.NORTH);
 
         display = new SGTextAndImagePanel();
         display.initialize(width, height, new Font("Ariel", Font.BOLD, 20));
@@ -86,7 +90,7 @@ public class FieldOfViewDemo {
             }
         }
         display.refresh();
-        frame.getContentPane().add(display, BorderLayout.SOUTH);
+        frame.add(display, BorderLayout.SOUTH);
         frame.setVisible(true);
 
         frame.pack();
@@ -113,7 +117,7 @@ public class FieldOfViewDemo {
      */
     private void doFOV(int startx, int starty) {
         //manually set the radius to 10
-        float[][] light = fov.calculateFOV(map, startx, starty, lightForce, (1.0f / 6.0f), true, "");
+        float[][] light = panel.getFOVSolver().calculateFOV(map, startx, starty, lightForce, (1.0f / 6.0f), true, "");
 
         //copy returned light map into the cells
         for (int x = 0; x < width; x++) {
@@ -131,7 +135,7 @@ public class FieldOfViewDemo {
                     } else {
                         SColor cellLight = SColorFactory.blend(litNear, litFar, 1 - map[x][y].getCurrentLight(""));
                         SColor objectLight = SColorFactory.blend(map[x][y].color, cellLight, lightAdjustment);
-                        display.placeCharacter(x, y, map[x][y].representation, objectLight , SColor.BLACK);
+                        display.placeCharacter(x, y, map[x][y].representation, objectLight, SColor.BLACK);
                     }
                 } else {
                     display.placeCharacter(x, y, ' ', display.getForeground(), display.getBackground());//clear unlit cells

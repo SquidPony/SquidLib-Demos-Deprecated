@@ -57,12 +57,12 @@ public class FontChoiceDemo {
 
         display = new SGTextPanel(width, height, control.getFontFace());
         frame.getContentPane().add(display, BorderLayout.SOUTH);
-        frame.setVisible(true);
 
-        changeDisplay();
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.repaint();
+        String text = "";
+        for (char c = 33; c <= 125; c++) {
+            text += c;
+        }
+        control.inputTextArea.setText(text);
 
         control.updateButton.addActionListener(new ActionListener() {
             @Override
@@ -83,7 +83,13 @@ public class FontChoiceDemo {
         });
 
         control.validateInput();
-        changeDisplay();
+        control.updateButton.doClick();
+        
+        frame.setVisible(true);
+
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.repaint();
     }
 
     /**
@@ -105,6 +111,9 @@ public class FontChoiceDemo {
      * Uses the information in the control panel to update the display.
      */
     private void changeDisplay() {
+        control.fontSizeField.setText("" + display.getFont().getSize());
+        control.cellWidthField.setText("" + display.getCellDimension().width);
+        control.cellHeightField.setText("" + display.getCellDimension().height);
         foreground = control.foreground;
         background = control.background;
         char[] chars = control.inputTextArea.getText().toCharArray();
