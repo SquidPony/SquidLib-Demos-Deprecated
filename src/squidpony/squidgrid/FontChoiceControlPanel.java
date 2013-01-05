@@ -49,12 +49,13 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
         //Get the font names from the graphics environment
-        fontList = ge.getAvailableFontFamilyNames();
+        Font[] fonts = ge.getAllFonts();
 
         fontComboBox.removeAllItems();
-        for (int i = 0; i < fontList.length; i++) {
-            fontComboBox.addItem(fontList[i]);
+        for (int i = 0; i < fonts.length; i++) {
+            fontComboBox.addItem(fonts[i].getFontName());
         }
+        fontComboBox.addItem("not a real font");
         fontComboBox.setMaximumRowCount(8);
         fontComboBox.setSelectedItem(fontComboBox.getItemAt(0));
     }
@@ -537,6 +538,5 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     //custom variables
     private int rows = 80, columns = 50, cellWidth = 24, cellHeight = 24, fontSize = 34, startRange = 0x20, endRange = 0x7E;
-    private String fontList[];
     public SColor foreground = SColor.BLACK, background = SColor.WHITE;
 }
