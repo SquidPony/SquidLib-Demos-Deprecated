@@ -36,7 +36,6 @@ public class DemoCell implements FOVCell {
         return resistance;
     }
 
-    @Override
     public float getCurrentLight(String key) {
         return light;
     }
