@@ -4,7 +4,7 @@ import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JFrame;
-import squidpony.squidgrid.gui.SGTextPanel;
+import squidpony.squidgrid.gui.SwingPane;
 
 /**
  * Demonstrates the use of SGKeyListener
@@ -14,7 +14,7 @@ import squidpony.squidgrid.gui.SGTextPanel;
 public class SGKeyEchoDemo {
 
     private JFrame frame;
-    private SGTextPanel display;
+    private SwingPane display;
     private int width = 50, height = 20;
     private int x = 0, y = 1;
     private String input = "";
@@ -26,7 +26,7 @@ public class SGKeyEchoDemo {
     private SGKeyEchoDemo() {
         frame = new JFrame("Key Echo Demo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        display = new SGTextPanel(width, height, new Font("Sans Serif", Font.BOLD, 18));
+        display = new SwingPane(width, height, new Font("Sans Serif", Font.BOLD, 18));
         frame.add(display);
 
         frame.pack();

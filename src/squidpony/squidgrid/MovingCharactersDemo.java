@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.event.MouseInputListener;
 import squidpony.squidcolor.SColor;
-import squidpony.squidgrid.gui.SGTextAndImagePanel;
+import squidpony.squidgrid.gui.SwingPane;
 import squidpony.squidgrid.util.Direction;
 
 /**
@@ -25,7 +25,7 @@ import squidpony.squidgrid.util.Direction;
  */
 public class MovingCharactersDemo {
 
-    private SGTextAndImagePanel display;//uses SGTextAndImagePanel instead of SGTextPanel in order to show it's usable as an in-place replacement/extension
+    private SwingPane display;//uses SGTextAndImagePanel instead of SGTextPanel in order to show it's usable as an in-place replacement/extension
     private JFrame frame;
     private static char[][] map = new char[][]{//in order to be in line with GUI coordinate pairs, this appears to be sideways in this style constructor.
         {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
@@ -60,7 +60,7 @@ public class MovingCharactersDemo {
         frame = new JFrame("SquidGrid Moving Objects Demonstration");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        display = new SGTextAndImagePanel();
+        display = new SwingPane();
         display.initialize(width, height, new Font("Ariel", Font.BOLD, 20));
         display.setText(map);
         display.refresh();

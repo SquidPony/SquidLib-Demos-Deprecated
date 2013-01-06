@@ -15,8 +15,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import squidpony.squidcolor.SColor;
 import squidpony.squidcolor.SColorFactory;
-import squidpony.squidgrid.gui.ImageCellFactory;
-import squidpony.squidgrid.gui.SGTextAndImagePanel;
+import squidpony.squidgrid.gui.ImageCellMap;
+import squidpony.squidgrid.gui.SwingPane;
 import squidpony.squidgrid.util.Direction;
 
 /**
@@ -26,7 +26,7 @@ import squidpony.squidgrid.util.Direction;
  */
 public class SquidBridges extends JFrame implements MouseListener, MouseMotionListener {
 
-    private SGTextAndImagePanel display;
+    private SwingPane display;
     private Hashiwokakero board = new Hashiwokakero(40, 20);
     private boolean imagesLoaded = true; //allows a text only version if images fail to load
     private ArrayList<Character> imageReplacements = new ArrayList<Character>();//used to know when an image is available. A String would be better in this case, but this example shows the generic case
@@ -44,7 +44,7 @@ public class SquidBridges extends JFrame implements MouseListener, MouseMotionLi
             imagesLoaded = false;
         }
 
-        display = new SGTextAndImagePanel();
+        display = new SwingPane();
         if (!imagesLoaded) {
             display.initialize(board.width, board.height, new Font("Serif", Font.BOLD, 24));//initialize just for text
         } else {
@@ -54,19 +54,20 @@ public class SquidBridges extends JFrame implements MouseListener, MouseMotionLi
         //load up the image cell factory with the desired images
         if (imagesLoaded) {//only check if the first one already worked
             try {
-                ImageCellFactory icf = ImageCellFactory.getInstance();
-                icf.addImage("|", singlevert);
-                icf.addImage("H", ImageIO.read(new File("./images/doublevertical.png")));
-                icf.addImage("-", ImageIO.read(new File("./images/singlehorizontal.png")));
-                icf.addImage("=", ImageIO.read(new File("./images/doublehorizontal.png")));
+                ImageCellMap imageMap = new ImageCellMap(new Dimension(singlevert.getWidth(), singlevert.getHeight()));
+                imageMap.addImage("|", singlevert);
+                imageMap.addImage("H", ImageIO.read(new File("./images/doublevertical.png")));
+                imageMap.addImage("-", ImageIO.read(new File("./images/singlehorizontal.png")));
+                imageMap.addImage("=", ImageIO.read(new File("./images/doublehorizontal.png")));
                 imageReplacements.add('|');
                 imageReplacements.add('H');
                 imageReplacements.add('-');
                 imageReplacements.add('=');
                 for (int i = 1; i <= 8; i++) {
-                    icf.addImage(String.valueOf(i), ImageIO.read(new File("./images/island" + i + ".png")));
+                    imageMap.addImage(String.valueOf(i), ImageIO.read(new File("./images/island" + i + ".png")));
                     imageReplacements.add((char) ('0' + i));
                 }
+                display.setImageCellMap(imageMap);
             } catch (IOException ex) {
                 imagesLoaded = false;
             }
@@ -139,7 +140,7 @@ public class SquidBridges extends JFrame implements MouseListener, MouseMotionLi
 
                 }
                 if (imagesLoaded && imageReplacements.contains(c)) {
-                    if(board.isLocked(x, y)){
+                    if (board.isLocked(x, y)) {
                         back = SColorFactory.blend(SColorFactory.lighter(SColor.BURNT_UMBER), SColor.BEIGE, 0.7);
                     }
                     display.placeImage(x, y, String.valueOf(c), back);

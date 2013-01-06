@@ -10,8 +10,8 @@ import javax.swing.JOptionPane;
 import javax.swing.event.MouseInputListener;
 import squidpony.squidcolor.SColor;
 import squidpony.squidcolor.SColorFactory;
-import squidpony.squidgrid.gui.SGTextAndImagePanel;
-import squidpony.squidgrid.gui.listener.SGMouseListener;
+import squidpony.squidgrid.gui.SwingPane;
+import squidpony.squidgrid.gui.swing.listener.SGMouseListener;
 
 /**
  * Demonstrates the use of the Field of View and Line of Sight algorithms.
@@ -20,7 +20,7 @@ import squidpony.squidgrid.gui.listener.SGMouseListener;
  */
 public class FieldOfViewDemo {
 
-    private SGTextAndImagePanel display;//uses SGTextAndImagePanel instead of SGTextPanel in order to show it's usable as an in-place replacement/extension
+    private SwingPane display;//uses SGTextAndImagePanel instead of SGTextPanel in order to show it's usable as an in-place replacement/extension
     private JFrame frame;
     private static final char[][] DEFAULT_MAP = new char[][]{//in order to be in line with GUI coordinate pairs, this appears to be sideways in this style constructor.
         {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
@@ -61,6 +61,7 @@ public class FieldOfViewDemo {
         map = new DemoCell[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
+
                 float resistance = 1.0f;//default is opaque
                 char c = DEFAULT_MAP[x][y];
                 SColor color = SColor.WHITE;
@@ -82,7 +83,7 @@ public class FieldOfViewDemo {
         panel = new FOVDemoPanel();
         frame.add(panel, BorderLayout.NORTH);
 
-        display = new SGTextAndImagePanel();
+        display = new SwingPane();
         display.initialize(width, height, new Font("Ariel", Font.BOLD, 20));
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {

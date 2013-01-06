@@ -16,7 +16,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import squidpony.squidcolor.SColor;
-import squidpony.squidgrid.gui.SGTextPanel;
+import squidpony.squidgrid.gui.SwingPane;
 import squidpony.squidgrid.gui.TextCellFactory;
 
 /**
@@ -26,7 +26,7 @@ import squidpony.squidgrid.gui.TextCellFactory;
  */
 public class FontChoiceDemo {
 
-    private SGTextPanel display;
+    private SwingPane display;
     private JMenu menu;
     private JFrame frame;
     private FontChoiceControlPanel control;
@@ -55,7 +55,7 @@ public class FontChoiceDemo {
         control = new squidpony.squidgrid.FontChoiceControlPanel(width, height);
         frame.getContentPane().add(control, BorderLayout.NORTH);
 
-        display = new SGTextPanel(width, height, control.getFontFace());
+        display = new SwingPane(width, height, control.getFontFace());
         frame.getContentPane().add(display, BorderLayout.SOUTH);
 
         String text = "";
@@ -68,11 +68,12 @@ public class FontChoiceDemo {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 control.validateInput();
-                TextCellFactory.getInstance().setAntialias(control.antialiasBox.isSelected());
                 char[] chars = control.inputTextArea.getText().toCharArray();
                 if (chars.length > 0) {
-                    display.ensureFits(chars, control.whiteSpaceBox.isSelected());
+                    display.ensureFits(chars);
                 }
+                display.getTextFactory().setAntialias(control.antialiasBox.isSelected());
+                display.getTextFactory().setPadding(control.whiteSpaceBox.isSelected() ? 2 : 0);//if selected, set some white space
                 if (control.cellSizeBox.isSelected()) {
                     display.initialize(control.getCellWidth(), control.getCellHeight(), control.getGridWidth(), control.getGridHeight(), control.getFontFace());
                 } else {
@@ -84,7 +85,7 @@ public class FontChoiceDemo {
 
         control.validateInput();
         control.updateButton.doClick();
-        
+
         frame.setVisible(true);
 
         frame.pack();
