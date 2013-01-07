@@ -122,7 +122,7 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
         updateButton.setText("Update");
 
         gridHeightField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        gridHeightField.setText("20");
+        gridHeightField.setText("16");
         gridHeightField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 gridHeightFieldActionPerformed(evt);
@@ -130,7 +130,7 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
         });
 
         cellHeightField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        cellHeightField.setText("24");
+        cellHeightField.setText("16");
         cellHeightField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cellHeightFieldActionPerformed(evt);
@@ -142,7 +142,7 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
         jLabel4.setText("Grid Size:");
 
         gridWidthField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        gridWidthField.setText("30");
+        gridWidthField.setText("16");
         gridWidthField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 gridWidthFieldActionPerformed(evt);
@@ -154,7 +154,7 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
         jLabel1.setText("X");
 
         cellWidthField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        cellWidthField.setText("24");
+        cellWidthField.setText("16");
         cellWidthField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cellWidthFieldActionPerformed(evt);
@@ -256,7 +256,7 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
 
         fontComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        fontSizeField.setText("24");
+        fontSizeField.setText("16");
         fontSizeField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fontSizeFieldActionPerformed(evt);

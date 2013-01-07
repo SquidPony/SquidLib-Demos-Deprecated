@@ -13,13 +13,15 @@ import squidpony.squidgrid.fov.FieldOfViewDemo;
  * @author Eben Howard - http://www.squidpony.com
  */
 public class MainFrame extends javax.swing.JFrame {
-
+    private final String VERSION = "15 - Graspee!";
+    
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("V: " + VERSION);
     }
 
     /**
