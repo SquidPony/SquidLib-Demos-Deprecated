@@ -13,7 +13,7 @@ import squidpony.squidgrid.fov.FieldOfViewDemo;
  * @author Eben Howard - http://www.squidpony.com
  */
 public class Demos extends javax.swing.JFrame {
-    private final String VERSION = "18";
+    private final String VERSION = "19";
     
     /**
      * Creates new form Demos
