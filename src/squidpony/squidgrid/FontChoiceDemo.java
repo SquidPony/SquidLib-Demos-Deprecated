@@ -111,7 +111,7 @@ public class FontChoiceDemo {
      * Uses the information in the control panel to update the display.
      */
     private void changeDisplay() {
-        control.fontSizeField.setText("" + display.getFont().getSize());
+        control.fontSizeField.setText("" + display.getTextFactory().getFont().getSize());
         control.cellWidthField.setText("" + display.getCellDimension().width);
         control.cellHeightField.setText("" + display.getCellDimension().height);
         foreground = control.foreground;
