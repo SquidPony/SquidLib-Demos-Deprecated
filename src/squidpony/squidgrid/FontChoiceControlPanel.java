@@ -149,6 +149,7 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
             }
         });
 
+        cellSizeBox.setSelected(true);
         cellSizeBox.setText("Force Cell Size");
 
         jLabel1.setText("X");
@@ -256,7 +257,7 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
 
         fontComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        fontSizeField.setText("34");
+        fontSizeField.setText("16");
         fontSizeField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fontSizeFieldActionPerformed(evt);
@@ -266,6 +267,7 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
         jLabel2.setText("Font Size:");
 
         boldCheckBox.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        boldCheckBox.setSelected(true);
         boldCheckBox.setText("BOLD");
 
         italicsCheckBox.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
@@ -273,7 +275,6 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
 
         whiteSpaceBox.setText("White Space");
 
-        antialiasBox.setSelected(true);
         antialiasBox.setText("Antialias");
 
         jLabel6.setText("Background:");
@@ -294,6 +295,7 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
             }
         });
 
+        colorizeToggleButton.setSelected(true);
         colorizeToggleButton.setText("Random Colors");
 
         loadFontButton.setText("...");
