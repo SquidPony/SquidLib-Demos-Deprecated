@@ -19,6 +19,7 @@ public class FOVDemoPanel extends javax.swing.JPanel {
         fovs.put("Shadow Casting", new ShadowFOV());
         fovs.put("Spiral", new SpiralFOV());
         fovs.put("Ray Casting", new RayCastingFOV());
+        fovs.put("Spread", new SpreadFOV());
 
         fovComboBox.removeAllItems();
         for (String s : fovs.keySet()) {
