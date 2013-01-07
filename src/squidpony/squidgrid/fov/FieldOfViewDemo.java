@@ -211,7 +211,7 @@ public class FieldOfViewDemo {
         lightForce = panel.radiusSlider.getValue();
         litNear = SColorFactory.getSColor(panel.castColorPanel.getBackground().getRGB());
         litFar = SColorFactory.getSColor(panel.fadeColorPanel.getBackground().getRGB());
-        light = panel.getFOVSolver().calculateFOV(resistances, startx, starty, 1f, 1 / lightForce, true);
+        light = panel.getFOVSolver().calculateFOV(resistances, startx, starty, 1f, 1 / lightForce, panel.simplifyButton.isSelected());
         SColorFactory.emptyCache();
         SColorFactory.addPallet("light", SColorFactory.getGradient(litNear, litFar));
 
