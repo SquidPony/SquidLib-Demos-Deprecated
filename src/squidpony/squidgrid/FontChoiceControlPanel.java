@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import squidpony.squidcolor.SColor;
 
 /**
@@ -511,12 +512,15 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
         final JFileChooser chooser = new JFileChooser();
         chooser.setMultiSelectionEnabled(false);
         chooser.setDialogTitle("Choose a TTF font.");
+        chooser.setCurrentDirectory(new File("."));
+        chooser.setFileFilter(new FileNameExtensionFilter("TTF Files", "ttf"));
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
                 File file = chooser.getSelectedFile();
                 Font font = Font.createFont(Font.TRUETYPE_FONT, file);
                 GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(font);
                 fontComboBox.addItem(font.getFontName());
+                fontComboBox.setSelectedItem(font.getFontName());
             } catch (FontFormatException ex) {
             } catch (IOException ex) {
             }

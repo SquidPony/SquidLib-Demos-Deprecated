@@ -16,8 +16,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import squidpony.squidcolor.SColor;
-import squidpony.squidgrid.gui.SwingPane;
-import squidpony.squidgrid.gui.TextCellFactory;
+import squidpony.squidgrid.gui.swing.SwingPane;
 
 /**
  * Demonstrates some of the capabilities of the squidpony.squidgrid package.

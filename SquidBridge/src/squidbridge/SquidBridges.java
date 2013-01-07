@@ -15,8 +15,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import squidpony.squidcolor.SColor;
 import squidpony.squidcolor.SColorFactory;
-import squidpony.squidgrid.gui.ImageCellMap;
-import squidpony.squidgrid.gui.SwingPane;
+import squidpony.squidgrid.gui.awt.ImageCellMap;
+import squidpony.squidgrid.gui.swing.SwingPane;
 import squidpony.squidgrid.util.Direction;
 
 /**

@@ -3,6 +3,8 @@ package squidpony.squidgrid.fov;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.Queue;
 import javax.swing.JFrame;
@@ -10,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.MouseInputListener;
 import squidpony.squidcolor.SColor;
 import squidpony.squidcolor.SColorFactory;
-import squidpony.squidgrid.gui.SwingPane;
+import squidpony.squidgrid.gui.swing.SwingPane;
 import squidpony.squidgrid.gui.swing.listener.SGMouseListener;
 
 /**
@@ -22,35 +24,61 @@ public class FieldOfViewDemo {
 
     private SwingPane display;//uses SGTextAndImagePanel instead of SGTextPanel in order to show it's usable as an in-place replacement/extension
     private JFrame frame;
-    private static final char[][] DEFAULT_MAP = new char[][]{//in order to be in line with GUI coordinate pairs, this appears to be sideways in this style constructor.
-        {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
-        {'#', '.', '.', '.', '.', '.', '#', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '#'},
-        {'#', '.', '.', '#', 's', '#', '.', '.', 'S', '.', '.', '.', '.', '.', '.', '.', '.', '#'},
-        {'#', '.', '.', '.', 'q', '.', '.', '.', 'q', '.', '.', '.', '.', '.', '.', '.', '.', '#'},
-        {'#', '.', '.', '.', 'u', '.', '.', '.', 'u', '.', '.', '.', '#', '.', '.', '.', '.', '#'},
-        {'#', '.', '.', '.', 'i', '.', '.', '.', 'i', '.', '.', '.', '.', '.', '.', '.', '.', '#'},
-        {'#', '.', '.', '.', 'd', '.', '.', '.', 'd', '.', '.', '.', '.', '.', '.', '.', '.', '#'},
-        {'#', '.', '.', '.', 'p', '.', '.', '.', 'L', '.', '.', '.', '.', '.', '.', '.', '.', '#'},
-        {'#', '#', '.', '.', 'o', '.', '.', '.', 'i', '.', '.', '.', '.', '.', '.', '.', '.', '#'},
-        {'#', '.', '.', '.', 'n', '.', '.', '.', 'b', '.', '.', '.', '.', '.', '.', '.', '.', '#'},
-        {'#', '.', '.', '.', 'y', '.', '.', '.', '.', '.', '.', '.', '.', '.', '#', '.', '#', '#'},
-        {'#', '.', '.', '.', '.', '.', '.', '.', 'F', '.', '.', '.', '.', '#', '.', '.', '.', '#'},
-        {'#', '.', '#', '.', 'c', '.', '.', '.', 'O', '.', '.', '.', '.', '.', '#', '#', '.', '#'},
-        {'#', '.', '.', '.', 'o', '.', '#', '.', 'V', '.', '.', '.', '.', '.', '.', '.', '.', '#'},
-        {'#', '.', '.', '.', 'm', '.', '.', '.', '.', '.', '#', '.', '.', '.', '.', '.', '.', '#'},
-        {'#', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '#'},
-        {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}
+    private static final String[] DEFAULT_MAP = new String[]{//in order to be in line with GUI coordinate pairs, this appears to be sideways in this style constructor.
+        "########################################",
+        "#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#",
+        "#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#",
+        "#¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸,TTT¸,,¸¸¸¸¸¸#",
+        "#¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸¸,TTT,,¸¸¸¸¸¸#",
+        "#¸¸¸¸¸¸¸¸¸¸¸TTT¸¸¸¸¸¸¸¸¸¸¸¸¸,¸¸,,¸¸¸¸¸¸#",
+        "#¸¸¸¸¸¸¸TTTTTT¸¸¸¸¸¸¸¸¸¸¸¸¸¸c,¸,,¸¸¸¸¸¸#",
+        "#¸¸¸TTTTTT¸¸¸¸¸¸¸¸¸¸¸¸¸¸ct¸ctc,,,¸¸¸¸¸¸#",
+        "#¸¸¸¸¸TTTTTT¸¸¸¸¸¸¸¸¸¸¸¸ctt¸c¸¸,,¸¸¸¸¸¸#",
+        "#¸¸TTTTT¸¸TTT¸¸¸¸¸¸¸¸¸¸¸¸cc¸¸¸¸,,¸¸¸¸¸¸#",
+        "###############################..¸¸¸¸S¸#",
+        "#.....#.....#.....#.....#.....#+/#¸¸¸S¸#",
+        "#.....#.....#.....#.....#.....#..#¸¸¸¸¸#",
+        "#.....#.....#.....#.....#.....#..#######",
+        "#.....#.....#.....#.....#.....#/+#.....#",
+        "#.....#.....#.....#.....#.....#..#.....#",
+        "#.....###+#####+#####/#####+###..+.....#",
+        "#######..........................#.....#",
+        "#.....#..........................#.....#",
+        "#.....#..........................#######",
+        "#.....#...####################...#...#E#",
+        "#.....#...+..E#..............#.../.../.#",
+        "#.....#...#####..............#...#...#E#",
+        "#.....#...#..................#...#######",
+        "#.....#...#..................#.........#",
+        "#.....#...#..................#.........#",
+        "#.....#...#..................#...#+###+#",
+        "#.....#...#..................#...#..#c.#",
+        "#.....#...#..................#...#E.#t.#",
+        "#.....#...#..................#...#E<#c.#",
+        "#.....#...#..................#...#######",
+        "#.....#...#..................#...#.....#",
+        "#.....#...#..................#...#.....#",
+        "#.....#...####################...#.....#",
+        "#.....#.......EEEEEEEEEEE........#.....#",
+        "#.....#..........................#.....#",
+        "#.....#..........................#.....#",
+        "#.....####+###+#####+#####+#####+#.....#",
+        "#.....#E.+.#.....#.....#.....#.........#",
+        "#.....####.#.....#.....#.....#tttt+#...#",
+        "#.....#E.+.#.....#.....#.....#..c..#...#",
+        "#.....####.#.....#.....#.....###..E#...#",
+        "#.....#E.+.#.....#.....#.....#E+.EE#...#",
+        "########################################"
     };
     private DemoCell[][] map;
-    private int width = DEFAULT_MAP.length, height = DEFAULT_MAP[0].length;
+    private float[][] light;
+    private float[][] resistances;
+    private int width = DEFAULT_MAP[0].length(), height = DEFAULT_MAP.length;
     private int cellWidth, cellHeight;
     private LOSSolver los = new BresenhamLOS();
-    private SColor litNear = SColorFactory.lightest(SColor.LIGHT_YELLOW_DYE),
-            litFar = SColor.ORANGUTAN,
-            replaceForeground = SColor.COBALT;
+    private SColor litNear, litFar, replaceForeground = SColor.COBALT;
     private boolean lightBackground = false;//if true then the defaultForeground will be used for objects and the background will be lit
-    private float lightForce = 1.1f, //controls how far the light will spread
-            lightAdjustment = 0.4f; //controls how much the light will change the appearance of objects
+    private float lightForce; //controls how far the light will spread
     private FOVDemoPanel panel;
 
     public static void main(String... args) {
@@ -59,20 +87,12 @@ public class FieldOfViewDemo {
 
     private FieldOfViewDemo() {
         map = new DemoCell[width][height];
+        resistances = new float[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-
-                float resistance = 1.0f;//default is opaque
-                char c = DEFAULT_MAP[x][y];
-                SColor color = SColor.WHITE;
-                if (c == '.') {//if a floor tile set to fully transparent
-                    resistance = 0f;
-                    color = SColor.SLATE_GRAY;
-                } else if (c == '#') {
-                    resistance = 1f;//if a wall set to fully opaque
-                    color = SColor.SLATE_GRAY;
-                }
-                map[x][y] = new DemoCell(resistance, 0f, c, color);
+                char c = DEFAULT_MAP[y].charAt(x);
+                map[x][y] = buildCell(c);
+                resistances[x][y] = map[x][y].resistance;
             }
         }
 
@@ -83,14 +103,16 @@ public class FieldOfViewDemo {
         panel = new FOVDemoPanel();
         frame.add(panel, BorderLayout.NORTH);
 
+        panel.clearBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clear();
+            }
+        });
+
         display = new SwingPane();
         display.initialize(width, height, new Font("Ariel", Font.BOLD, 20));
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                display.placeCharacter(x, y, map[x][y].representation, map[x][y].color);
-            }
-        }
-        display.refresh();
+        clear();
         frame.add(display, BorderLayout.SOUTH);
         frame.setVisible(true);
 
@@ -104,10 +126,78 @@ public class FieldOfViewDemo {
         JOptionPane.showMessageDialog(frame, "Click inside the window to calculate Field of View from the point clicked.\n"
                 + "Hold and drag between two points to draw a Line of Sight line.");
 
-
         MouseInputListener mil = new SGMouseListener(cellWidth, cellHeight, new DemoInputListener());
         display.addMouseListener(mil);//listens for clicks and releases
         display.addMouseMotionListener(mil);//listens for movement based events
+    }
+
+    private void clear() {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                display.placeCharacter(x, y, map[x][y].representation, map[x][y].color, SColor.BLACK);
+            }
+        }
+        display.refresh();
+    }
+
+    /**
+     * Builds a cell based on the character in the map.
+     *
+     * @param c
+     * @return
+     */
+    private DemoCell buildCell(char c) {
+        float resistance = 0f;//default is transparent
+        SColor color;
+        switch (c) {
+            case '.':
+                color = SColor.SLATE_GRAY;
+                break;
+            case '¸':
+                color = SColor.GREEN;
+                break;
+            case ',':
+                color = SColor.STOREROOM_BROWN;
+                break;
+            case 'c':
+                color = SColor.SEPIA;
+                break;
+            case '/':
+                color = SColor.BROWNER;
+                break;
+            case '<':
+            case '>':
+                color = SColor.SLATE_GRAY;
+                break;
+            case 't':
+                color = SColor.BROWNER;
+                resistance = 0.3f;
+                break;
+            case 'T':
+                color = SColor.FOREST_GREEN;
+                resistance = 0.7f;
+                break;
+            case 'E':
+                color = SColor.SILVER;
+                resistance = 0.8f;
+                break;
+            case 'S':
+                color = SColor.BREWED_MUSTARD_BROWN;
+                resistance = 0.9f;
+                break;
+            case '#':
+                color = SColor.SLATE_GRAY;
+                resistance = 1f;
+                break;
+            case '+':
+                color = SColor.BROWNER;
+                resistance = 1f;
+                break;
+            default://opaque items
+                resistance = 1f;//unknown is opaque
+                color = SColor.DEEP_PINK;
+        }
+        return new DemoCell(resistance, c, color);
     }
 
     /**
@@ -117,25 +207,25 @@ public class FieldOfViewDemo {
      * @param starty
      */
     private void doFOV(int startx, int starty) {
-        //manually set the radius to 10
-        float[][] light = panel.getFOVSolver().calculateFOV(map, startx, starty, lightForce, (1.0f / 6.0f), true, "");
-
-        //copy returned light map into the cells
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                map[x][y].light = light[x][y];
-            }
-        }
+        //manually set the radius to equal the force
+        lightForce = panel.radiusSlider.getValue();
+        litNear = SColorFactory.getSColor(panel.castColorPanel.getBackground().getRGB());
+        litFar = SColorFactory.getSColor(panel.fadeColorPanel.getBackground().getRGB());
+        light = panel.getFOVSolver().calculateFOV(resistances, startx, starty, 1f, 1 / lightForce, true);
+        SColorFactory.emptyCache();
+        SColorFactory.addPallet("light", SColorFactory.getGradient(litNear, litFar));
 
         //repaint the level with new light map -- Note that in normal use you'd limit this to just elements that changed
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                if (map[x][y].light > 0f) {
+                if (light[x][y] > 0f) {
                     if (lightBackground) {
-                        display.placeCharacter(x, y, map[x][y].representation, replaceForeground, SColorFactory.blend(litNear, litFar, 1 - map[x][y].getCurrentLight("")));
+                        display.placeCharacter(x, y, map[x][y].representation, replaceForeground, SColorFactory.getFromPallet("light", 1 - light[x][y]));
                     } else {
-                        SColor cellLight = SColorFactory.blend(litNear, litFar, 1 - map[x][y].getCurrentLight(""));
-                        SColor objectLight = SColorFactory.blend(map[x][y].color, cellLight, lightAdjustment);
+                        double radius = Math.sqrt((x - startx) * (x - startx) + (y - starty) * (y - starty));
+                        float bright = 1 - light[x][y];
+                        SColor cellLight = SColorFactory.getFromPallet("light", bright);
+                        SColor objectLight = SColorFactory.blend(map[x][y].color, cellLight, getTint(radius));
                         display.placeCharacter(x, y, map[x][y].representation, objectLight, SColor.BLACK);
                     }
                 } else {
@@ -145,12 +235,28 @@ public class FieldOfViewDemo {
         }
 
         //put the player at the origin of the FOV
+        float bright = 1 - light[startx][starty];
+        SColor cellLight = SColorFactory.getFromPallet("light", bright);
+        SColor objectLight = SColorFactory.blend(SColor.ALICE_BLUE, cellLight, getTint(0f));
         if (lightBackground) {
-            display.placeCharacter(startx, starty, '@', replaceForeground, SColorFactory.blend(litNear, litFar, 1 - map[startx][starty].getCurrentLight("")));
+            display.placeCharacter(startx, starty, '@', replaceForeground, objectLight);
         } else {
-            display.placeCharacter(startx, starty, '@', SColorFactory.blend(litNear, litFar, 1 - map[startx][starty].getCurrentLight("")), SColor.BLACK);
+            display.placeCharacter(startx, starty, '@', objectLight, SColor.BLACK);
         }
         display.refresh();
+    }
+
+    /**
+     * Custom method to determine tint based on radius as well as general tint
+     * factor.
+     *
+     * @param radius
+     * @return
+     */
+    public float getTint(double radius) {
+        float tint = panel.tintSlider.getValue() / 100f;
+        tint = (float) (0f + tint * radius);//adjust tint based on distance
+        return tint;
     }
 
     /**
@@ -165,39 +271,28 @@ public class FieldOfViewDemo {
     private void doLOS(int startx, int starty, int endx, int endy) {
         //working variables
         char c;
-        SColor fore;
+        SColor fore = SColor.WHITE;
 
         //run the LOS calculation
-        boolean visible = los.isReachable(map, startx, starty, endx, endy, lightForce, "");
+        boolean visible = los.isReachable(resistances, startx, starty, endx, endy, lightForce);
         Queue<Point> path = los.getLastPath();
 
         //draw out background for path followed
         for (Point p : path) {
-            fore = SColor.BLACK;
-            c = ' ';
-            if (map[p.x][p.y].getCurrentLight("") > 0f) {
-                fore = SColorFactory.blend(litNear, litFar, 1 - map[p.x][p.y].getCurrentLight(""));
-                c = map[p.x][p.y].representation;
-            }
+            c = map[p.x][p.y].representation;
             display.placeCharacter(p.x, p.y, c, fore, SColor.BLUE_GREEN_DYE);
         }
 
         //mark the start location
-        c = ' ';
-        if (map[startx][starty].getCurrentLight("") > 0f) {
-            c = map[startx][starty].representation;
-        }
-        display.placeCharacter(startx, starty, c, litNear, SColor.AMBER_DYE);
+        c = map[startx][starty].representation;
+        display.placeCharacter(startx, starty, c, fore, SColor.AMBER_DYE);
 
         //mark end point
         if (visible) {
-            c = ' ';
-            if (map[endx][endy].getCurrentLight("") > 0f) {
-                c = map[endx][endy].representation;
-            }
-            display.placeCharacter(endx, endy, c, litNear, SColor.GREEN);
+            c = map[endx][endy].representation;
+            display.placeCharacter(endx, endy, c, fore, SColor.GREEN);
         } else {
-            display.placeCharacter(endx, endy, ' ', litNear, SColor.RED_PIGMENT);
+            display.placeCharacter(endx, endy, ' ', fore, SColor.RED_PIGMENT);
         }
         display.refresh();
     }
@@ -249,6 +344,27 @@ public class FieldOfViewDemo {
         @Override
         public void mouseMoved(MouseEvent e) {
             //nothing special happens
+        }
+    }
+
+    private class DemoCell {
+
+        float resistance;
+        char representation;
+        SColor color;
+
+        /**
+         * Creates a new cell which has minimal properties needed to represent
+         * it.
+         *
+         * @param resistance
+         * @param light
+         * @param representation
+         */
+        public DemoCell(float resistance, char representation, SColor color) {
+            this.resistance = resistance;
+            this.representation = representation;
+            this.color = color;
         }
     }
 }

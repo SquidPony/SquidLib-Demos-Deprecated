@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.event.MouseInputListener;
 import squidpony.squidcolor.SColor;
-import squidpony.squidgrid.gui.SwingPane;
+import squidpony.squidgrid.gui.swing.SwingPane;
 import squidpony.squidgrid.util.Direction;
 
 /**
