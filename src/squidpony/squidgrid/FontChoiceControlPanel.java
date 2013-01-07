@@ -256,7 +256,7 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
 
         fontComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        fontSizeField.setText("16");
+        fontSizeField.setText("34");
         fontSizeField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fontSizeFieldActionPerformed(evt);

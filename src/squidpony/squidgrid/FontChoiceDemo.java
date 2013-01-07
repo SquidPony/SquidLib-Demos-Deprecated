@@ -29,7 +29,7 @@ public class FontChoiceDemo {
     private JMenu menu;
     private JFrame frame;
     private FontChoiceControlPanel control;
-    private int width = 35, height = 12;
+    private int width = 16, height = 16;
     private Random rng = new Random();
     private SColor foreground, background;
 
