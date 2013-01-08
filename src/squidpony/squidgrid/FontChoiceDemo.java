@@ -72,7 +72,7 @@ public class FontChoiceDemo {
                     display.ensureFits(chars);
                 }
                 display.getTextFactory().setAntialias(control.antialiasBox.isSelected());
-                display.getTextFactory().setPadding(control.whiteSpaceBox.isSelected() ? 2 : 0);//if selected, set some white space
+                display.getTextFactory().setPadding(control.getLeftPad(), control.getRightPad(), control.getTopPad(), control.getBottomPad());
                 if (control.cellSizeBox.isSelected()) {
                     display.initialize(control.getCellWidth(), control.getCellHeight(), control.getGridWidth(), control.getGridHeight(), control.getFontFace());
                 } else {
@@ -114,8 +114,8 @@ public class FontChoiceDemo {
         control.fontSizeField.setText("" + display.getTextFactory().getFont().getSize());
         control.cellWidthField.setText("" + display.getCellDimension().width);
         control.cellHeightField.setText("" + display.getCellDimension().height);
-        foreground = control.foreground;
-        background = control.background;
+        foreground = new SColor(control.foreColorPanel.getBackground());
+        background = new SColor(control.backColorPanel.getBackground());
         char[] chars = control.inputTextArea.getText().toCharArray();
         if (chars.length > 0) {
             int position = 0;
