@@ -116,7 +116,14 @@ public class FontChoiceDemo {
         control.cellHeightField.setText("" + display.getCellDimension().height);
         foreground = new SColor(control.foreColorPanel.getBackground());
         background = new SColor(control.backColorPanel.getBackground());
-        char[] chars = control.inputTextArea.getText().toCharArray();
+        String oldText = control.inputTextArea.getText();
+        String text = "";
+        for (char c : oldText.toCharArray()) {
+            if (!Character.isISOControl(c) && c != '\n' && c != '\r') {
+                text += c;
+            }
+        }
+        char[] chars = text.toCharArray();
         if (chars.length > 0) {
             int position = 0;
             for (int y = 0; y < display.getGridHeight(); y++) {
