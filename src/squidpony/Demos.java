@@ -13,7 +13,7 @@ import squidpony.squidgrid.gui.swing.listener.SGKeyEchoDemo;
  * @author Eben Howard - http://www.squidpony.com
  */
 public class Demos extends javax.swing.JFrame {
-    private final String VERSION = "21";
+    private final String VERSION = "22";
     
     /**
      * Creates new form Demos

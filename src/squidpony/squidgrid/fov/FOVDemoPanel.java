@@ -18,16 +18,16 @@ public class FOVDemoPanel extends javax.swing.JPanel {
      */
     public FOVDemoPanel() {
         initComponents();
-        fovs.put("Shadow Casting", new ShadowFOV());
-        fovs.put("Awesome Squid", new AwesomeSquidFOV());
         fovs.put("Ray Casting", new RayCastingFOV());
+        fovs.put("Ripple", new RippleFOV());
+        fovs.put("Shadow Casting", new ShadowFOV());
         fovs.put("Spread", new SpreadFOV());
 
         fovComboBox.removeAllItems();
         for (String s : fovs.keySet()) {
             fovComboBox.addItem(s);
         }
-        fovComboBox.setSelectedItem("Awesome Squid");
+        fovComboBox.setSelectedItem("Ray Casting");
 
         loss.put("Bresenham", new BresenhamLOS());
 
@@ -45,7 +45,7 @@ public class FOVDemoPanel extends javax.swing.JPanel {
         for (String s : strats.keySet()) {
             stratComboBox.addItem(s);
         }
-        stratComboBox.setSelectedIndex(0);
+        stratComboBox.setSelectedItem("Circle");
     }
 
     public FOVSolver getFOVSolver() {
