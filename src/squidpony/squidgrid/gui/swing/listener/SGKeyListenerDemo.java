@@ -1,8 +1,8 @@
-package squidpony.squidgrid;
+package squidpony.squidgrid.gui.swing.listener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import squidpony.squidgrid.gui.swing.listener.SGKeyListener;
+import squidpony.squidgrid.gui.awt.event.SGKeyListener;
 
 /**
  * Demonstrates the use of SGKeyListener

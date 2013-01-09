@@ -1,4 +1,4 @@
-package squidpony.squidgrid;
+package squidpony.squidgrid.gui.swing.animation;
 
 import java.awt.BorderLayout;
 import java.awt.Font;

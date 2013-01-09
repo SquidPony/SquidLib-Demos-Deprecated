@@ -1,4 +1,4 @@
-package squidpony.squidgrid;
+package squidpony.squidgrid.gui.swing.listener;
 
 import java.awt.Font;
 import java.awt.event.KeyEvent;

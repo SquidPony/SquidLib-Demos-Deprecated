@@ -1,10 +1,10 @@
 package squidpony;
 
 import squidpony.squidcolor.ColorMethodsDemo;
-import squidpony.squidgrid.FontChoiceDemo;
-import squidpony.squidgrid.MovingCharactersDemo;
-import squidpony.squidgrid.SGKeyEchoDemo;
 import squidpony.squidgrid.fov.FieldOfViewDemo;
+import squidpony.squidgrid.gui.FontChoiceDemo;
+import squidpony.squidgrid.gui.swing.animation.MovingCharactersDemo;
+import squidpony.squidgrid.gui.swing.listener.SGKeyEchoDemo;
 
 /**
  * Launcher for various demos and utilities associated with the SquidLib library
@@ -13,7 +13,7 @@ import squidpony.squidgrid.fov.FieldOfViewDemo;
  * @author Eben Howard - http://www.squidpony.com
  */
 public class Demos extends javax.swing.JFrame {
-    private final String VERSION = "20";
+    private final String VERSION = "21";
     
     /**
      * Creates new form Demos

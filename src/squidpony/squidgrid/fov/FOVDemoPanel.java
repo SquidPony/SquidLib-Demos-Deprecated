@@ -9,7 +9,9 @@ import javax.swing.JColorChooser;
  */
 public class FOVDemoPanel extends javax.swing.JPanel {
 
-    TreeMap<String, FOVSolver> fovs = new TreeMap<>();
+    private TreeMap<String, FOVSolver> fovs = new TreeMap<>();
+    private TreeMap<String, LOSSolver> loss = new TreeMap<>();
+    private TreeMap<String, RadiusStrategy> strats = new TreeMap<>();
 
     /**
      * Creates new form FOVDemoPanel
@@ -17,7 +19,7 @@ public class FOVDemoPanel extends javax.swing.JPanel {
     public FOVDemoPanel() {
         initComponents();
         fovs.put("Shadow Casting", new ShadowFOV());
-        fovs.put("Spiral", new SpiralFOV());
+        fovs.put("Awesome Squid", new AwesomeSquidFOV());
         fovs.put("Ray Casting", new RayCastingFOV());
         fovs.put("Spread", new SpreadFOV());
 
@@ -25,11 +27,37 @@ public class FOVDemoPanel extends javax.swing.JPanel {
         for (String s : fovs.keySet()) {
             fovComboBox.addItem(s);
         }
-        fovComboBox.setSelectedIndex(0);
+        fovComboBox.setSelectedItem("Awesome Squid");
+
+        loss.put("Bresenham", new BresenhamLOS());
+
+        losComboBox.removeAllItems();
+        for (String s : loss.keySet()) {
+            losComboBox.addItem(s);
+        }
+        losComboBox.setSelectedIndex(0);
+
+        strats.put("Circle", BasicRadiusStrategy.CIRCLE);
+        strats.put("Diamond", BasicRadiusStrategy.DIAMOND);
+        strats.put("Square", BasicRadiusStrategy.SQUARE);
+
+        stratComboBox.removeAllItems();
+        for (String s : strats.keySet()) {
+            stratComboBox.addItem(s);
+        }
+        stratComboBox.setSelectedIndex(0);
     }
 
     public FOVSolver getFOVSolver() {
         return fovs.get((String) fovComboBox.getSelectedItem());
+    }
+
+    public LOSSolver getLOSSolver() {
+        return loss.get((String) losComboBox.getSelectedItem());
+    }
+
+    public RadiusStrategy getStrategy() {
+        return strats.get((String) stratComboBox.getSelectedItem());
     }
 
     /**
@@ -56,7 +84,8 @@ public class FOVDemoPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         losComboBox = new javax.swing.JComboBox();
         fovComboBox = new javax.swing.JComboBox();
-        simplifyButton = new javax.swing.JToggleButton();
+        stratComboBox = new javax.swing.JComboBox();
+        jLabel5 = new javax.swing.JLabel();
 
         lightFadeButton.setText("Light Color Fade");
         lightFadeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -81,9 +110,9 @@ public class FOVDemoPanel extends javax.swing.JPanel {
         radiusSlider.setMaximum(50);
         radiusSlider.setPaintLabels(true);
         radiusSlider.setToolTipText("Sets the radius ligth will be cast to");
-        radiusSlider.setValue(8);
+        radiusSlider.setValue(20);
 
-        castColorPanel.setBackground(new java.awt.Color(255, 255, 204));
+        castColorPanel.setBackground(new java.awt.Color(255, 255, 236));
         castColorPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         castColorPanel.setMinimumSize(new java.awt.Dimension(24, 24));
         castColorPanel.setPreferredSize(new java.awt.Dimension(24, 24));
@@ -99,7 +128,7 @@ public class FOVDemoPanel extends javax.swing.JPanel {
             .addGap(0, 20, Short.MAX_VALUE)
         );
 
-        fadeColorPanel.setBackground(new java.awt.Color(51, 0, 0));
+        fadeColorPanel.setBackground(new java.awt.Color(160, 79, 0));
         fadeColorPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         fadeColorPanel.setMinimumSize(new java.awt.Dimension(24, 24));
         fadeColorPanel.setPreferredSize(new java.awt.Dimension(24, 24));
@@ -178,37 +207,43 @@ public class FOVDemoPanel extends javax.swing.JPanel {
 
         fovComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        simplifyButton.setSelected(true);
-        simplifyButton.setText("Simplify Diags");
+        stratComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel5.setText("Radius Strategy");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(fovComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(losComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(simplifyButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(losComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fovComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(stratComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(74, 74, 74)
                         .addComponent(clearBox)))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {fovComboBox, losComboBox, stratComboBox});
+
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(stratComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(fovComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -217,9 +252,7 @@ public class FOVDemoPanel extends javax.swing.JPanel {
                     .addComponent(jLabel2)
                     .addComponent(losComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(clearBox)
-                    .addComponent(simplifyButton))
+                .addComponent(clearBox)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -255,13 +288,14 @@ public class FOVDemoPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton lightCastButton;
     private javax.swing.JButton lightFadeButton;
     private javax.swing.JComboBox losComboBox;
     public javax.swing.JSlider radiusSlider;
-    public javax.swing.JToggleButton simplifyButton;
+    private javax.swing.JComboBox stratComboBox;
     public javax.swing.JSlider tintSlider;
     // End of variables declaration//GEN-END:variables
 }
