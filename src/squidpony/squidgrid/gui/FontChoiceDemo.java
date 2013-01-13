@@ -1,6 +1,5 @@
 package squidpony.squidgrid.gui;
 
-import squidpony.squidgrid.gui.FontChoiceControlPanel;
 import java.awt.BorderLayout;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -17,7 +16,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import squidpony.squidcolor.SColor;
-import squidpony.squidgrid.gui.swing.SwingPane;
 import squidpony.squidgrid.gui.swing.SwingPane;
 
 /**

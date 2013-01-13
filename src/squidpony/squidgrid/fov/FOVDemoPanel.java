@@ -2,6 +2,7 @@ package squidpony.squidgrid.fov;
 
 import java.util.TreeMap;
 import javax.swing.JColorChooser;
+import squidpony.squidutility.Pair;
 
 /**
  *
@@ -18,6 +19,10 @@ public class FOVDemoPanel extends javax.swing.JPanel {
      */
     public FOVDemoPanel() {
         initComponents();
+        FOVTranslator merged = new FOVTranslator();
+        merged.add(new Pair<FOVSolver, RadiusStrategy>(new ShadowFOV(), BasicRadiusStrategy.DIAMOND), 1f);
+        merged.add(new Pair<FOVSolver, RadiusStrategy>(new ShadowFOV(), BasicRadiusStrategy.SQUARE), 0.2f);
+        fovs.put("Merged", merged);
         fovs.put("Ray Casting", new RayCastingFOV());
         fovs.put("Ripple", new RippleFOV());
         fovs.put("Shadow Casting", new ShadowFOV());

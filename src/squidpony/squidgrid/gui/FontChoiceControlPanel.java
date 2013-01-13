@@ -374,7 +374,7 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
             }
         });
 
-        foreColorPanel.setBackground(new java.awt.Color(255, 255, 204));
+        foreColorPanel.setBackground(new java.awt.Color(255, 255, 235));
         foreColorPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         foreColorPanel.setMinimumSize(new java.awt.Dimension(24, 24));
 
