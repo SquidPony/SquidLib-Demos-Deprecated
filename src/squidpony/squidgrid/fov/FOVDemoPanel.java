@@ -23,7 +23,7 @@ public class FOVDemoPanel extends javax.swing.JPanel {
         merged.add(new Pair<FOVSolver, RadiusStrategy>(new ShadowFOV(), BasicRadiusStrategy.DIAMOND), 1f);
         merged.add(new Pair<FOVSolver, RadiusStrategy>(new ShadowFOV(), BasicRadiusStrategy.SQUARE), 0.2f);
         fovs.put("Merged", merged);
-        fovs.put("Ray Casting", new RayCastingFOV());
+//        fovs.put("Ray Casting", new RayCastingFOV());
         fovs.put("Ripple", new RippleFOV());
         fovs.put("Shadow Casting", new ShadowFOV());
         fovs.put("Spread", new SpreadFOV());
@@ -32,7 +32,7 @@ public class FOVDemoPanel extends javax.swing.JPanel {
         for (String s : fovs.keySet()) {
             fovComboBox.addItem(s);
         }
-        fovComboBox.setSelectedItem("Ray Casting");
+        fovComboBox.setSelectedItem("Shadow Casting");
 
         loss.put("Bresenham", new BresenhamLOS());
 
@@ -109,7 +109,7 @@ public class FOVDemoPanel extends javax.swing.JPanel {
         tintSlider.setMajorTickSpacing(10);
         tintSlider.setPaintLabels(true);
         tintSlider.setToolTipText("Sets the percentage that the cast light effects the lit cell.");
-        tintSlider.setValue(20);
+        tintSlider.setValue(5);
 
         radiusSlider.setMajorTickSpacing(10);
         radiusSlider.setMaximum(50);
@@ -117,7 +117,7 @@ public class FOVDemoPanel extends javax.swing.JPanel {
         radiusSlider.setToolTipText("Sets the radius ligth will be cast to");
         radiusSlider.setValue(20);
 
-        castColorPanel.setBackground(new java.awt.Color(255, 255, 236));
+        castColorPanel.setBackground(new java.awt.Color(255, 255, 245));
         castColorPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         castColorPanel.setMinimumSize(new java.awt.Dimension(24, 24));
         castColorPanel.setPreferredSize(new java.awt.Dimension(24, 24));

@@ -132,9 +132,6 @@ public class FieldOfViewDemo {
         cellWidth = display.getCellDimension().width;
         cellHeight = display.getCellDimension().height;
 
-        JOptionPane.showMessageDialog(frame, "Click inside the window to calculate Field of View from the point clicked.\n"
-                + "Hold and drag between two points to draw a Line of Sight line.");
-
         DemoInputListener dil = new DemoInputListener();
         MouseInputListener mil = new SGMouseListener(cellWidth, cellHeight, dil);
         display.addMouseListener(mil);//listens for clicks and releases
