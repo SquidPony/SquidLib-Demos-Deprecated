@@ -3,6 +3,7 @@ package squidpony.squidgrid.gui.swing.listener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import squidpony.squidgrid.gui.awt.event.SGKeyListener;
+import squidpony.squidgrid.gui.awt.event.SGKeyListener.CaptureType;
 
 /**
  * Demonstrates the use of SGKeyListener
@@ -15,7 +16,7 @@ public class SGKeyListenerDemo {
         JFrame frame = new JFrame("SGKeyListenerDemo -- Press 'x' to exit");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        SGKeyListener key = new SGKeyListener(true, true);
+        SGKeyListener key = new SGKeyListener(true, CaptureType.DOWN);
         frame.addKeyListener(key);
 
         JLabel label = new JLabel("Pressed Character");
@@ -28,7 +29,7 @@ public class SGKeyListenerDemo {
         char c;
         do {
             frame.repaint();
-            c = key.getKeyEvent().getKeyChar();
+            c = key.next().getKeyChar();
             label.setText("\nKey pressed: " + c);
         } while (true);
     }
