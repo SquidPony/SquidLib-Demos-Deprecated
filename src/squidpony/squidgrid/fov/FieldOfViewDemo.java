@@ -11,7 +11,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.util.Queue;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.event.MouseInputListener;
 import squidpony.squidcolor.SColor;
 import squidpony.squidcolor.SColorFactory;
@@ -23,7 +22,7 @@ import static squidpony.squidgrid.util.Direction.*;
 /**
  * Demonstrates the use of the Field of View and Line of Sight algorithms.
  *
- * @author Eben Howard - http://squidpony.com - eben@squidpony.com
+ * @author Eben Howard - http://squidpony.com - howard@squidpony.com
  */
 public class FieldOfViewDemo {
 
@@ -120,6 +119,8 @@ public class FieldOfViewDemo {
         });
 
         display = new SwingPane();
+//        SColorFactory.setRGBFloorValue(25);//test of the flooring function to reduce total number of colors made
+        
         display.initialize(width, height, new Font("Ariel", Font.BOLD, 18));
         clear();
         frame.add(display, BorderLayout.SOUTH);
@@ -254,7 +255,7 @@ public class FieldOfViewDemo {
         litNear = SColorFactory.getSColor(panel.castColorPanel.getBackground().getRGB());
         litFar = SColorFactory.getSColor(panel.fadeColorPanel.getBackground().getRGB());
         light = panel.getFOVSolver().calculateFOV(resistances, startx, starty, 1f, 1 / lightForce, panel.getStrategy());
-        SColorFactory.emptyCache();
+//        SColorFactory.emptyCache();//uncomment to check perfomance difference
         SColorFactory.addPallet("light", SColorFactory.getGradient(litNear, litFar));
 
         //repaint the level with new light map -- Note that in normal use you'd limit this to just elements that changed
@@ -268,10 +269,10 @@ public class FieldOfViewDemo {
                         float bright = 1 - light[x][y];
                         SColor cellLight = SColorFactory.getFromPallet("light", bright);
                         SColor objectLight = SColorFactory.blend(map[x][y].color, cellLight, getTint(radius));
-                        display.placeCharacter(x, y, map[x][y].representation, objectLight, SColor.BLACK);
+                        display.placeCharacter(x, y, map[x][y].representation, objectLight);
                     }
                 } else {
-                    display.placeCharacter(x, y, ' ', display.getForeground(), display.getBackground());//clear unlit cells
+                    display.clearCell(x, y);
                 }
             }
         }
@@ -283,9 +284,10 @@ public class FieldOfViewDemo {
         if (lightBackground) {
             display.placeCharacter(startx, starty, '@', replaceForeground, objectLight);
         } else {
-            display.placeCharacter(startx, starty, '@', objectLight, SColor.BLACK);
+            display.placeCharacter(startx, starty, '@', objectLight);
         }
         display.refresh();
+        System.out.println("Colors: " + SColorFactory.getQuantityCached());
     }
 
     /**
