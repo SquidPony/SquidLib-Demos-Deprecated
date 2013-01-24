@@ -119,7 +119,7 @@ public class FieldOfViewDemo {
         });
 
         display = new SwingPane();
-//        SColorFactory.setRGBFloorValue(25);//test of the flooring function to reduce total number of colors made
+//        SColorFactory.setFloor(25);//test of the flooring function to reduce total number of colors made
         
         display.initialize(width, height, new Font("Ariel", Font.BOLD, 18));
         clear();
@@ -252,22 +252,22 @@ public class FieldOfViewDemo {
     private void doFOV(int startx, int starty) {
         //manually set the radius to equal the force
         lightForce = panel.radiusSlider.getValue();
-        litNear = SColorFactory.getSColor(panel.castColorPanel.getBackground().getRGB());
-        litFar = SColorFactory.getSColor(panel.fadeColorPanel.getBackground().getRGB());
+        litNear = SColorFactory.asSColor(panel.castColorPanel.getBackground().getRGB());
+        litFar = SColorFactory.asSColor(panel.fadeColorPanel.getBackground().getRGB());
         light = panel.getFOVSolver().calculateFOV(resistances, startx, starty, 1f, 1 / lightForce, panel.getStrategy());
 //        SColorFactory.emptyCache();//uncomment to check perfomance difference
-        SColorFactory.addPallet("light", SColorFactory.getGradient(litNear, litFar));
+        SColorFactory.addPallet("light", SColorFactory.asGradient(litNear, litFar));
 
         //repaint the level with new light map -- Note that in normal use you'd limit this to just elements that changed
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 if (light[x][y] > 0f) {
                     if (lightBackground) {
-                        display.placeCharacter(x, y, map[x][y].representation, replaceForeground, SColorFactory.getFromPallet("light", 1 - light[x][y]));
+                        display.placeCharacter(x, y, map[x][y].representation, replaceForeground, SColorFactory.fromPallet("light", 1 - light[x][y]));
                     } else {
                         double radius = Math.sqrt((x - startx) * (x - startx) + (y - starty) * (y - starty));
                         float bright = 1 - light[x][y];
-                        SColor cellLight = SColorFactory.getFromPallet("light", bright);
+                        SColor cellLight = SColorFactory.fromPallet("light", bright);
                         SColor objectLight = SColorFactory.blend(map[x][y].color, cellLight, getTint(radius));
                         display.placeCharacter(x, y, map[x][y].representation, objectLight);
                     }
@@ -279,7 +279,7 @@ public class FieldOfViewDemo {
 
         //put the player at the origin of the FOV
         float bright = 1 - light[startx][starty];
-        SColor cellLight = SColorFactory.getFromPallet("light", bright);
+        SColor cellLight = SColorFactory.fromPallet("light", bright);
         SColor objectLight = SColorFactory.blend(SColor.ALICE_BLUE, cellLight, getTint(0f));
         if (lightBackground) {
             display.placeCharacter(startx, starty, '@', replaceForeground, objectLight);
@@ -287,7 +287,7 @@ public class FieldOfViewDemo {
             display.placeCharacter(startx, starty, '@', objectLight);
         }
         display.refresh();
-        System.out.println("Colors: " + SColorFactory.getQuantityCached());
+        System.out.println("Colors: " + SColorFactory.quantityCached());
     }
 
     /**

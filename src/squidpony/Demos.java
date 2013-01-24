@@ -1,6 +1,6 @@
 package squidpony;
 
-import squidpony.squidcolor.ColorMethodsDemo;
+import squidpony.squidcolor.SColorMethodsDemo;
 import squidpony.squidgrid.fov.FieldOfViewDemo;
 import squidpony.squidgrid.gui.FontChoiceDemo;
 import squidpony.squidgrid.gui.swing.animation.MovingCharactersDemo;
@@ -13,8 +13,9 @@ import squidpony.squidgrid.gui.swing.listener.SGKeyEchoDemo;
  * @author Eben Howard - http://www.squidpony.com
  */
 public class Demos extends javax.swing.JFrame {
-    private final String VERSION = "22";
-    
+
+    private final String VERSION = "1.25";
+
     /**
      * Creates new form Demos
      */
@@ -42,14 +43,14 @@ public class Demos extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SquidLib Demonstrations and Utilities");
 
-        jButton1.setText("Color Methods Demo");
+        jButton1.setText("SColor Chooser and Methods Demo");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("SquidGrid Demo");
+        jButton2.setText("SquidGrid  Font Demo and Tool");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -111,7 +112,7 @@ public class Demos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ColorMethodsDemo.main(new String[]{});
+        SColorMethodsDemo.main(new String[]{});
         setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
