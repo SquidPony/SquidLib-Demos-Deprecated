@@ -16,6 +16,7 @@ import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import squidpony.squidcolor.SColor;
+import squidpony.squidcolor.SColorFactory;
 
 /**
  *
@@ -626,11 +627,11 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_cellHeightFieldActionPerformed
 
     private void foregroundButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_foregroundButtonActionPerformed
-        foreColorPanel.setBackground(new SColor(JColorChooser.showDialog(this, "Choose Text Color", foreColorPanel.getBackground())));
+        foreColorPanel.setBackground(SColorFactory.showSColorChooser(this));
     }//GEN-LAST:event_foregroundButtonActionPerformed
 
     private void backgroundButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backgroundButtonActionPerformed
-        backColorPanel.setBackground(new SColor(JColorChooser.showDialog(this, "Choose Background Color", backColorPanel.getBackground())));
+        backColorPanel.setBackground(SColorFactory.showSColorChooser(this));
     }//GEN-LAST:event_backgroundButtonActionPerformed
 
     private void generateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateButtonActionPerformed

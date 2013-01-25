@@ -1,7 +1,7 @@
 package squidpony.squidgrid.fov;
 
 import java.util.TreeMap;
-import javax.swing.JColorChooser;
+import squidpony.squidcolor.SColorFactory;
 
 /**
  *
@@ -23,6 +23,7 @@ public class FOVDemoPanel extends javax.swing.JPanel {
 //        merged.add(new Pair<FOVSolver, RadiusStrategy>(new ShadowFOV(), BasicRadiusStrategy.SQUARE), 0.2f);
 //        fovs.put("Merged", merged);
 //        fovs.put("Ray Casting", new RayCastingFOV());
+        fovs.put("Elias", new EliasFOV());
         fovs.put("Ripple", new RippleFOV());
         fovs.put("Shadow Casting", new ShadowFOV());
         fovs.put("Spread", new SpreadFOV());
@@ -34,12 +35,13 @@ public class FOVDemoPanel extends javax.swing.JPanel {
         fovComboBox.setSelectedItem("Shadow Casting");
 
         loss.put("Bresenham", new BresenhamLOS());
+        loss.put("Elias", new EliasLOS());
 
         losComboBox.removeAllItems();
         for (String s : loss.keySet()) {
             losComboBox.addItem(s);
         }
-        losComboBox.setSelectedIndex(0);
+        losComboBox.setSelectedItem("Elias");
 
         strats.put("Circle", BasicRadiusStrategy.CIRCLE);
         strats.put("Diamond", BasicRadiusStrategy.DIAMOND);
@@ -277,11 +279,11 @@ public class FOVDemoPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lightCastButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lightCastButtonActionPerformed
-        castColorPanel.setBackground(JColorChooser.showDialog(this, "Choose Cast Light Color", castColorPanel.getBackground()));
+        castColorPanel.setBackground(SColorFactory.showSColorChooser(this));
     }//GEN-LAST:event_lightCastButtonActionPerformed
 
     private void lightFadeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lightFadeButtonActionPerformed
-        fadeColorPanel.setBackground(JColorChooser.showDialog(this, "Choose Cast Light Color", fadeColorPanel.getBackground()));
+        fadeColorPanel.setBackground(SColorFactory.showSColorChooser(this));
     }//GEN-LAST:event_lightFadeButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JPanel castColorPanel;

@@ -54,19 +54,19 @@ public class FieldOfViewDemo {
         "#..................................#.....#...#####..............#...#...#E#........mm≈≈≈≈≈mmmmmmmmmø",
         "#..................................#.....#...#..................#...#######...m.....m≈≈≈≈mmmmmmmmmmø",
         "#..................................#.....#...#..................#.........+......mmmm≈≈mmm....mm≈≈mø",
-        "#..................................#.....#...#..................#.........+...uu...um≈≈mu.....m≈≈≈mø",
+        "#..................................#.....#...#..................#........./...uu...um≈≈mu.....m≈≈≈mø",
         "#..................................#.....#...#..................#...#+###+#..uuuuuuuu≈≈uu.u.ummmmuuø",
         "#..................................#.....#...#.................##...#..#c.#uuuuuuuuuu≈≈uuuAuuuuuuuuø",
         "#..................................#.....#...#................#.#...#E.#t.#uuuuuAuuA≈≈≈≈≈uuuuuuuuuuø",
         "#..................................#.....#...#...............#..#...#E<#c.#uuAuAuuu≈≈≈≈≈≈≈AuAAuuAuuø",
-        "#..................................#.....#...#.............##...#...#######uAuAAA≈≈≈≈≈≈≈≈≈≈AAAAAAAuø",
+        "#..................................#.....#...#.............##.../...#######uAuAAA≈≈≈≈≈≈≈≈≈≈AAAAAAAuø",
         "#..................................#.....#...#............#.....#...#.....#AAAuA≈≈≈≈≈≈≈≈≈≈≈AAAAAAAAø",
         "#..................................#.....#...#............#.....#...#.....#AAAA≈≈≈≈≈≈≈≈≈≈≈≈≈AAAAAAAø",
         "#..................................#.....#...####################...#.....#AAAAu≈≈≈≈≈≈≈≈≈≈≈≈≈≈AAAAAø",
         "#..................................#.....#.......EEEEEEEEEEE........#.....#AAAAuu.≈≈≈≈mmm≈≈≈≈≈AAuAAø",
         "#..................................#.....#..........................#.....#AAAuuuu≈≈≈≈≈mm≈≈≈≈AAuuAAø",
         "#..................................#.....#..........................#.....#AAAAuuuu≈≈≈≈≈≈≈≈≈AAuuuAAø",
-        "#..................................#.....####+###+#####+#####+#####+#.....#AAAAAAAuu..≈≈≈≈≈AAAAuAAAø",
+        "#..................................#.....####+###+#####+#####+#####/#.....#AAAAAAAuu..≈≈≈≈≈AAAAuAAAø",
         "#..................................#.....#E.+.#.....#.....#.....#.........#AAAAAAAAA.AAA≈≈AAAAAAAAAø",
         "#..................................#.....####.#.....#.....#.....#tttt+#...#AAAAAAAA..AAAuuu.uAAAAAAø",
         "#..................................#.....#E.+.#.....#.....#.....#..c..#...#AAAAAAA....AAAAu..uAAAAAø",
@@ -120,7 +120,7 @@ public class FieldOfViewDemo {
 
         display = new SwingPane();
 //        SColorFactory.setFloor(25);//test of the flooring function to reduce total number of colors made
-        
+
         display.initialize(width, height, new Font("Ariel", Font.BOLD, 18));
         clear();
         frame.add(display, BorderLayout.SOUTH);
@@ -255,7 +255,7 @@ public class FieldOfViewDemo {
         litNear = SColorFactory.asSColor(panel.castColorPanel.getBackground().getRGB());
         litFar = SColorFactory.asSColor(panel.fadeColorPanel.getBackground().getRGB());
         light = panel.getFOVSolver().calculateFOV(resistances, startx, starty, 1f, 1 / lightForce, panel.getStrategy());
-//        SColorFactory.emptyCache();//uncomment to check perfomance difference
+//        SColorFactory.emptyCache();//uncomment to check perfomance differences in flooring values
         SColorFactory.addPallet("light", SColorFactory.asGradient(litNear, litFar));
 
         //repaint the level with new light map -- Note that in normal use you'd limit this to just elements that changed
@@ -287,7 +287,6 @@ public class FieldOfViewDemo {
             display.placeCharacter(startx, starty, '@', objectLight);
         }
         display.refresh();
-        System.out.println("Colors: " + SColorFactory.quantityCached());
     }
 
     /**
@@ -315,30 +314,23 @@ public class FieldOfViewDemo {
     private void doLOS(int startx, int starty, int endx, int endy) {
         los = panel.getLOSSolver();
 
-        //working variables
-        char c;
-        SColor fore = SColor.WHITE;
-
         //run the LOS calculation
         boolean visible = los.isReachable(resistances, startx, starty, endx, endy);
         Queue<Point> path = los.getLastPath();
 
         //draw out background for path followed
         for (Point p : path) {
-            c = map[p.x][p.y].representation;
-            display.placeCharacter(p.x, p.y, c, fore, SColor.BLUE_GREEN_DYE);
+            display.setCellBackground(p.x, p.y, SColor.BLUE_GREEN_DYE);
         }
 
         //mark the start location
-        c = map[startx][starty].representation;
-        display.placeCharacter(startx, starty, c, fore, SColor.AMBER_DYE);
+        display.setCellBackground(startx, starty, SColor.AMBER_DYE);
 
         //mark end point
         if (visible) {
-            c = map[endx][endy].representation;
-            display.placeCharacter(endx, endy, c, fore, SColor.GREEN);
+            display.setCellBackground(endx, endy, SColor.BRIGHT_GREEN);
         } else {
-            display.placeCharacter(endx, endy, ' ', fore, SColor.RED_PIGMENT);
+            display.setCellBackground(endx, endy, SColor.RED_PIGMENT);
         }
         display.refresh();
     }
