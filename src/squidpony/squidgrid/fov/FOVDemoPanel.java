@@ -24,6 +24,7 @@ public class FOVDemoPanel extends javax.swing.JPanel {
 //        fovs.put("Merged", merged);
 //        fovs.put("Ray Casting", new RayCastingFOV());
         fovs.put("Elias", new EliasFOV());
+        fovs.put("Push", new PushFOV());
         fovs.put("Ripple", new RippleFOV());
         fovs.put("Shadow Casting", new ShadowFOV());
         fovs.put("Spread", new SpreadFOV());
@@ -32,7 +33,7 @@ public class FOVDemoPanel extends javax.swing.JPanel {
         for (String s : fovs.keySet()) {
             fovComboBox.addItem(s);
         }
-        fovComboBox.setSelectedItem("Shadow Casting");
+        fovComboBox.setSelectedItem("Push");
 
         loss.put("Bresenham", new BresenhamLOS());
         loss.put("Elias", new EliasLOS());
