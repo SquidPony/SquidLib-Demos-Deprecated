@@ -5,7 +5,7 @@ import squidpony.squidcolor.SColorFactory;
 
 /**
  *
- * @author Eben Howard - http://squidpony.com - eben@squidpony.com
+ * @author Eben Howard - http://squidpony.com - howard@squidpony.com
  */
 public class FOVDemoPanel extends javax.swing.JPanel {
 
@@ -24,16 +24,16 @@ public class FOVDemoPanel extends javax.swing.JPanel {
 //        fovs.put("Merged", merged);
 //        fovs.put("Ray Casting", new RayCastingFOV());
         fovs.put("Elias", new EliasFOV());
-        fovs.put("Push", new PushFOV());
         fovs.put("Ripple", new RippleFOV());
         fovs.put("Shadow Casting", new ShadowFOV());
         fovs.put("Spread", new SpreadFOV());
+        fovs.put("Translucence Wrapper", new TranslucenceWrapperFOV());
 
         fovComboBox.removeAllItems();
         for (String s : fovs.keySet()) {
             fovComboBox.addItem(s);
         }
-        fovComboBox.setSelectedItem("Push");
+        fovComboBox.setSelectedItem("Translucence Wrapper");
 
         loss.put("Bresenham", new BresenhamLOS());
         loss.put("Elias", new EliasLOS());
