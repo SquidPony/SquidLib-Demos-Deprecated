@@ -12,10 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
-import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import squidpony.squidcolor.SColor;
 import squidpony.squidcolor.SColorFactory;
 
 /**
@@ -56,9 +54,12 @@ public class FontChoiceControlPanel extends javax.swing.JPanel {
         Font[] fonts = ge.getAllFonts();
 
         fontComboBox.removeAllItems();
-        LinkedList<String> set = new LinkedList<String>();
+        LinkedList<String> set = new LinkedList<>();
         for (int i = 0; i < fonts.length; i++) {
-            set.add(fonts[i].getFontName());
+            String name = fonts[i].getFamily();
+            if (!set.contains(name)) {
+                set.add(name);
+            }
         }
         Collections.sort(set);
         for (String s : set) {
