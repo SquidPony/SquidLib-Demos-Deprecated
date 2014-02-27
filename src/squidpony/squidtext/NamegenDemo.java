@@ -18,7 +18,32 @@ public class NamegenDemo {
     }
 
     public void go() {
-        String[] text = new String[]{ "Andor", "Baatar", "Drogo", "Grog", "Gruumsh", "Grunt", "Hodor", "Hrothgar", "Hrun", "Korg", "Lothar", "Odin", "Thor", "Yngvar", "Xandor"};
+//        String[] text = new String[]{ "Andor", "Baatar", "Drogo", "Grog", "Gruumsh", "Grunt", "Hodor", "Hrothgar", "Hrun", "Korg", "Lothar", "Odin", "Thor", "Yngvar", "Xandor"};
+        String[] text = new String[]{//Star Wars-like names
+            "Lutoif Vap",
+            "Nasoi Seert",
+            "Bispai Sose",
+            "Vainau Brairkau",
+            "Tirka Kist",
+            "Boush Wofe",
+            "Vouxoin Voges",
+            "Koux Boiti",
+            "Loim Gaungu",
+            "Mut Tep",
+            "Foimo Saispi",
+            "Toneeg Vaiba",
+            "Nix Nast",
+            "Gup Dangisp",
+            "Distark Toonausp",
+            "Tex Brirki",
+            "Kat Tosha",
+            "Tauna Foip",
+            "Frip Cex",
+            "Fexa Lun",
+            "Tafa Zeesheerk",
+            "Cremoim Kixoop",
+            "Tago"
+        };
         namegen = new WeightedLetterNamegen(text);
         generate();
     }
