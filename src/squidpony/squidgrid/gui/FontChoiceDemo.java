@@ -71,8 +71,8 @@ public class FontChoiceDemo {
                 if (chars.length > 0) {
                     display.ensureFits(chars);
                 }
-                display.getTextFactory().setAntialias(control.antialiasBox.isSelected());
-                display.getTextFactory().setPadding(control.getLeftPad(), control.getRightPad(), control.getTopPad(), control.getBottomPad());
+                display.getTextCellFactory().setAntialias(control.antialiasBox.isSelected());
+                display.getTextCellFactory().setPadding(control.getLeftPad(), control.getRightPad(), control.getTopPad(), control.getBottomPad());
                 if (control.cellSizeBox.isSelected()) {
                     display.initialize(control.getCellWidth(), control.getCellHeight(), control.getGridWidth(), control.getGridHeight(), control.getFontFace());
                 } else {
@@ -111,7 +111,7 @@ public class FontChoiceDemo {
      * Uses the information in the control panel to update the display.
      */
     private void changeDisplay() {
-        control.fontSizeField.setText("" + display.getTextFactory().getFont().getSize());
+        control.fontSizeField.setText("" + display.getTextCellFactory().getFont().getSize());
         control.cellWidthField.setText("" + display.getCellDimension().width);
         control.cellHeightField.setText("" + display.getCellDimension().height);
         foreground = new SColor(control.foreColorPanel.getBackground());

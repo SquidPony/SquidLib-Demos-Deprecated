@@ -26,8 +26,8 @@ public class HighlightDemo {
         frame = new JFrame("Highlight Demo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         display = new SwingPane();
-        display.getTextFactory().setPadding(0, 0, 3, 0);//adds a bit of vertical padding
-        display.getTextFactory().setAntialias(true);//make sure characters are smooth
+        display.getTextCellFactory().setPadding(0, 0, 3, 0);//adds a bit of vertical padding
+        display.getTextCellFactory().setAntialias(true);//make sure characters are smooth
         display.initialize(width, height, new Font("Ariel", Font.BOLD, 32));
         frame.add(display);
 

@@ -139,7 +139,7 @@ public class FieldOfViewDemo {
         display = new SwingPane();
 
         display.initialize(width, height, new Font("Ariel", Font.BOLD, 18));
-        display.getTextFactory().setAntialias(true);
+        display.getTextCellFactory().setAntialias(true);
         clear();
 
         frame.add(display, BorderLayout.SOUTH);
