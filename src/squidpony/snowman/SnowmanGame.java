@@ -1,8 +1,10 @@
 package squidpony.snowman;
 
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Point;
-import java.awt.event.KeyEvent;
+import static java.awt.event.KeyEvent.*;
+import static squidpony.squidgrid.util.Direction.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,9 +62,11 @@ public class SnowmanGame {
         createMap();
         updateMap();
         updateStats();
-        printOut("Welcome to Final Lab");
+        printOut("Welcome to the Snowman Demo Game!");
 
-        runTurn();
+        while (true) {
+            runTurn();
+        }
     }
 
     /**
@@ -72,8 +76,16 @@ public class SnowmanGame {
     private void runTurn() {
         int key = keyListener.next().getExtendedKeyCode();
         boolean success = false;
-        if (key == KeyEvent.VK_RIGHT) {
-            success = tryToMove(Direction.RIGHT);
+        Direction dir = getDirection(key);
+        if (dir != null) {
+            success = tryToMove(dir);
+        } else {
+            switch (key) {
+                case VK_ESCAPE:
+                    printOut("Thanks for playing, press any key to exit.");
+                    keyListener.next();
+                    System.exit(0);
+            }
         }
 
         //update all end of turn items
@@ -143,6 +155,12 @@ public class SnowmanGame {
      * Updates the stats display to show current values
      */
     private void updateStats() {
+        for (int x = 0; x < statWidth; x++) {
+            for (int y = 0; y < height; y++) {
+                statsPanel.clearCell(x, y);
+            }
+        }
+
         int y = 0;
         String info = "STATS";
         statsPanel.placeHorizontalString((statWidth - info.length()) / 2, y, info);
@@ -159,6 +177,12 @@ public class SnowmanGame {
      * @param message
      */
     private void printOut(String message) {
+        for (int x = 0; x < width + statWidth; x++) {
+            for (int y = 0; y < outputLines; y++) {
+                outputPanel.clearCell(x, y);
+            }
+        }
+
         outputPanel.placeHorizontalString(0, 0, message);
         outputPanel.refresh();
     }
@@ -205,69 +229,25 @@ public class SnowmanGame {
         }
 
         //randomly place some chunks of wall
-        placeWallChunk();
-        placeWallChunk();
-        placeWallChunk();
-        placeWallChunk();
-        placeWallChunk();
-        placeWallChunk();
-        placeWallChunk();
-        placeWallChunk();
-        placeWallChunk();
+        for (int i = 0; i < 10; i++) {
+            placeWallChunk();
+        }
 
         //randomly place the player
         placeMonster(player);
 
         //randomly place some monsters
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
-        placeMonster(new Monster(Monster.SNOWMAN));
+        for (int i = 0; i < 30; i++) {
+            placeMonster(new Monster(Monster.SNOWMAN));
+        }
 
-        placeTreasure(new Treasure("Chocolate Coin", 1));
-        placeTreasure(new Treasure("Chocolate Coin", 1));
-        placeTreasure(new Treasure("Chocolate Coin", 1));
-        placeTreasure(new Treasure("Chocolate Coin", 1));
-        placeTreasure(new Treasure("Chocolate Coin", 1));
-        placeTreasure(new Treasure("Chocolate Coin", 1));
-        placeTreasure(new Treasure("Chocolate Coin", 1));
-        placeTreasure(new Treasure("Chocolate Coin", 1));
-        placeTreasure(new Treasure("Chocolate Coin", 1));
-        placeTreasure(new Treasure("Chocolate Coin", 1));
-        placeTreasure(new Treasure("Chocolate Coin", 1));
-        placeTreasure(new Treasure("Coal", 0));
-        placeTreasure(new Treasure("Coal", 0));
-        placeTreasure(new Treasure("Coal", 0));
-        placeTreasure(new Treasure("Coal", 0));
+        for (int i = 0; i < 20; i++) {
+            placeTreasure(new Treasure("Chocolate Coin", 1));
+        }
+
+        for (int i = 0; i < 10; i++) {
+            placeTreasure(new Treasure("Coal", 0));
+        }
 
     }
 
@@ -353,8 +333,8 @@ public class SnowmanGame {
      * Moves all the monsters, one at a time.
      */
     private void moveAllMonsters() {
-        for (int i = 0; i < monsters.size(); i++) {
-            moveMonster(monsters.get(i));
+        for (Monster monster : monsters) {
+            moveMonster(monster);
         }
     }
 
@@ -362,7 +342,7 @@ public class SnowmanGame {
      * Sets up the frame for display and keyboard input.
      */
     private void initializeFrame() {
-        frame = new JFrame("Final Lab - The Game");
+        frame = new JFrame("Snowman Demo - The Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         try {
             frame.setIconImage(ImageIO.read(new File("./icon.png")));
@@ -375,8 +355,6 @@ public class SnowmanGame {
         keyListener = new SGKeyListener(true, SGKeyListener.CaptureType.DOWN);
         frame.addKeyListener(keyListener);
 
-        panel = new JPanel();
-
         mapPanel = new SwingPane(width, height, font);
 
         TextCellFactory textFactory = mapPanel.getTextCellFactory();
@@ -385,22 +363,59 @@ public class SnowmanGame {
         textFactory.initializeBySize(mapPanel.getCellWidth(), mapPanel.getCellHeight(), font);
         mapPanel.placeHorizontalString(width / 2 - 4, height / 2, "Loading");
         mapPanel.refresh();
-        panel.add(mapPanel);
+        frame.add(mapPanel, BorderLayout.WEST);
 
         statsPanel = new SwingPane(mapPanel.getCellWidth(), mapPanel.getCellHeight(), statWidth, mapPanel.getGridHeight(), font);
         statsPanel.setDefaultBackground(SColor.DARK_GRAY);
         statsPanel.setDefaultForeground(SColor.RUST);
         statsPanel.refresh();
-        panel.add(statsPanel);
+        frame.add(statsPanel, BorderLayout.EAST);
 
         outputPanel = new SwingPane(mapPanel.getGridWidth() + statsPanel.getGridWidth(), outputLines, font);
         outputPanel.setDefaultBackground(SColor.ALICE_BLUE);
         outputPanel.setDefaultForeground(SColor.BURNT_BAMBOO);
         outputPanel.refresh();
-        panel.add(outputPanel);
+        frame.add(outputPanel, BorderLayout.SOUTH);
 
-        frame.add(panel);
         frame.pack();
+    }
+
+    private Direction getDirection(int code) {
+        switch (code) {
+            case VK_LEFT:
+            case VK_NUMPAD4:
+            case VK_H:
+                return LEFT;
+            case VK_RIGHT:
+            case VK_NUMPAD6:
+            case VK_L:
+                return RIGHT;
+            case VK_UP:
+            case VK_NUMPAD8:
+            case VK_K:
+                return UP;
+            case VK_DOWN:
+            case VK_NUMPAD2:
+            case VK_J:
+                return DOWN;
+            case VK_NUMPAD1:
+            case VK_B:
+                return DOWN_LEFT;
+            case VK_NUMPAD3:
+            case VK_N:
+                return DOWN_RIGHT;
+            case VK_NUMPAD7:
+            case VK_Y:
+                return UP_LEFT;
+            case VK_NUMPAD9:
+            case VK_U:
+                return UP_RIGHT;
+            case VK_PERIOD:
+            case VK_NUMPAD5:
+                return NONE;
+            default:
+                return null;
+        }
     }
 
 }

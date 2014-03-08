@@ -90,9 +90,7 @@ public class MovingCharactersDemo {
         start.x = rng.nextInt(display.getGridWidth());
         start.y = rng.nextInt(display.getGridHeight());
         display.placeCharacter(start.x, start.y, '@', getRandomColor());
-
         display.slide(start, new Point(rng.nextInt(display.getGridWidth()), rng.nextInt(display.getGridHeight())));
-
         display.placeCharacter(start.x, start.y, map[start.x][start.y]);//replaces the background as the object moves off of it
 
         display.refresh();
@@ -122,11 +120,7 @@ public class MovingCharactersDemo {
 
         @Override
         public void mouseClicked(MouseEvent me) {
-            if (spawning) {
-                spawning = false;
-            } else {
-                spawning = true;
-            }
+            spawning = !spawning;
         }
 
         @Override

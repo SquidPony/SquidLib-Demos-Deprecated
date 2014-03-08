@@ -1,14 +1,10 @@
 package squidpony.bootstrap;
 
-import com.sun.awt.AWTUtilities;
 import java.awt.Point;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
+import squidpony.annotation.Beta;
 import squidpony.snowman.Monster;
 import squidpony.snowman.Tile;
 import squidpony.snowman.Treasure;
@@ -22,6 +18,7 @@ import squidpony.squidmath.RNG;
  *
  * @author Eben Howard - http://squidpony.com - howard@squidpony.com
  */
+@Beta
 public class BootstrapDemo implements GameLogic {
 
     private BootStrapFrame frame;
@@ -43,19 +40,8 @@ public class BootstrapDemo implements GameLogic {
     }
 
     private void go() {
-       final BootstrapDemo demo = this;
-        try {
-            SwingUtilities.invokeAndWait(new Runnable() {
-                
-                @Override
-                public void run() {
-                    frame = new BootStrapFrame(width, height, demo);
-                }
-                
-            });
-        } catch (InterruptedException | InvocationTargetException ex) {
-        }
-        frame.initFrame();
+        final BootstrapDemo demo = this;
+        frame = new BootStrapFrame(width, height, demo);
     }
 
     @Override
