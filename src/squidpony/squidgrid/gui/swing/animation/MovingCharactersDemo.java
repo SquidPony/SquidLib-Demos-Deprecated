@@ -13,7 +13,7 @@ import javax.swing.Timer;
 import javax.swing.event.MouseInputListener;
 import squidpony.squidcolor.SColor;
 import squidpony.squidgrid.gui.swing.SwingPane;
-import squidpony.squidgrid.util.Direction;
+import squidpony.squidgrid.util.DirectionIntercardinal;
 
 /**
  * Demonstrates the use of animations in SGTextPanel.
@@ -111,7 +111,7 @@ public class MovingCharactersDemo {
         start.y = rng.nextInt(display.getGridHeight());
         display.placeCharacter(start.x, start.y, '@', getRandomColor());
 
-        display.bump(start, Direction.values()[rng.nextInt(Direction.values().length)]);
+        display.bump(start, DirectionIntercardinal.values()[rng.nextInt(DirectionIntercardinal.values().length)]);
 
         display.refresh();
     }

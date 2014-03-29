@@ -4,7 +4,7 @@ import squidpony.squidgrid.util.RadiusStrategy;
 import java.util.TreeMap;
 import squidpony.squidcolor.SColorFactory;
 import squidpony.squidgrid.los.BresenhamLOS;
-import squidpony.squidgrid.los.EliasLOS;
+import squidpony.squidgrid.los.EliasConcurrentLOS;
 import squidpony.squidgrid.los.LOSSolver;
 import squidpony.squidgrid.los.RayCastingLOS;
 import squidpony.squidgrid.util.BasicRadiusStrategy;
@@ -42,7 +42,7 @@ public class FOVDemoPanel extends javax.swing.JPanel {
         fovComboBox.setSelectedItem("Translucence Wrapper");
 
         loss.put("Bresenham", new BresenhamLOS());
-        loss.put("Elias", new EliasLOS());
+        loss.put("Elias", new EliasConcurrentLOS());
         loss.put("Ray Casting", new RayCastingLOS());
 
         losComboBox.removeAllItems();

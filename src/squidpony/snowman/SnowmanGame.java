@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Point;
 import static java.awt.event.KeyEvent.*;
-import static squidpony.squidgrid.util.Direction.*;
+import static squidpony.squidgrid.util.DirectionIntercardinal.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import squidpony.squidgrid.fov.ShadowFOV;
 import squidpony.squidgrid.gui.awt.TextCellFactory;
 import squidpony.squidgrid.gui.awt.event.SGKeyListener;
 import squidpony.squidgrid.gui.swing.SwingPane;
-import squidpony.squidgrid.util.Direction;
+import squidpony.squidgrid.util.DirectionIntercardinal;
 
 /**
  * This class starts up the game.
@@ -70,13 +70,13 @@ public class SnowmanGame {
     }
 
     /**
-     * This is the main game loop method that takes input and process the results. Right now it
-     * doesn't loop!
+     * This is the main game loop method that takes input and process the
+     * results. Right now it doesn't loop!
      */
     private void runTurn() {
         int key = keyListener.next().getExtendedKeyCode();
         boolean success = false;
-        Direction dir = getDirection(key);
+        DirectionIntercardinal dir = getDirection(key);
         if (dir != null) {
             success = tryToMove(dir);
         } else {
@@ -99,15 +99,16 @@ public class SnowmanGame {
     }
 
     /**
-     * Attempts to move in the given direction. If a monster is in that direction then the player
-     * attacks the monster.
+     * Attempts to move in the given direction. If a monster is in that
+     * direction then the player attacks the monster.
      *
-     * Returns false if there was a wall in the direction and so no action was taken.
+     * Returns false if there was a wall in the direction and so no action was
+     * taken.
      *
      * @param dir
      * @return
      */
-    private boolean tryToMove(Direction dir) {
+    private boolean tryToMove(DirectionIntercardinal dir) {
         Tile tile = map[player.x + dir.deltaX][player.y + dir.deltaY];
         if (tile.isWall()) {
             return false;
@@ -252,8 +253,8 @@ public class SnowmanGame {
     }
 
     /**
-     * Randomly places a group of walls in the map. This replaces whatever was in that location
-     * previously.
+     * Randomly places a group of walls in the map. This replaces whatever was
+     * in that location previously.
      */
     private void placeWallChunk() {
         int spread = 5;
@@ -306,13 +307,13 @@ public class SnowmanGame {
     }
 
     /**
-     * Moves the monster given if possible. Monsters will not move into walls, other monsters, or
-     * the player.
+     * Moves the monster given if possible. Monsters will not move into walls,
+     * other monsters, or the player.
      *
      * @param monster
      */
     private void moveMonster(Monster monster) {
-        Direction dir = Direction.CARDINALS[rng.nextInt(Direction.CARDINALS.length)];//get a random direction
+        DirectionIntercardinal dir = DirectionIntercardinal.CARDINALS[rng.nextInt(DirectionIntercardinal.CARDINALS.length)];//get a random direction
         Tile tile = map[monster.x + dir.deltaX][monster.y + dir.deltaY];
         if (!tile.isWall() && tile.getMonster() == null) {
             map[monster.x][monster.y].setMonster(null);
@@ -380,7 +381,7 @@ public class SnowmanGame {
         frame.pack();
     }
 
-    private Direction getDirection(int code) {
+    private DirectionIntercardinal getDirection(int code) {
         switch (code) {
             case VK_LEFT:
             case VK_NUMPAD4:
