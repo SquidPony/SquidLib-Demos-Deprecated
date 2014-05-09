@@ -34,12 +34,13 @@ public class FOVDemoPanel extends javax.swing.JPanel {
         fovs.put("Shadow Casting", new ShadowFOV());
         fovs.put("Spread", new SpreadFOV());
         fovs.put("Translucence Wrapper", new TranslucenceWrapperFOV());
+        fovs.put("Tight Shadow Casting", new TightShadowFOV());
 
         fovComboBox.removeAllItems();
         for (String s : fovs.keySet()) {
             fovComboBox.addItem(s);
         }
-        fovComboBox.setSelectedItem("Translucence Wrapper");
+        fovComboBox.setSelectedItem("Tight Shadow Casting");
 
         loss.put("Bresenham", new BresenhamLOS());
         loss.put("Elias", new EliasConcurrentLOS());
@@ -100,6 +101,8 @@ public class FOVDemoPanel extends javax.swing.JPanel {
         fovComboBox = new javax.swing.JComboBox();
         stratComboBox = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        tileValueField = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
 
         lightFadeButton.setText("Light Color Fade");
@@ -223,6 +226,18 @@ public class FOVDemoPanel extends javax.swing.JPanel {
 
         jLabel5.setText("Radius Strategy");
 
+        jLabel4.setText("Tile's Value");
+
+        tileValueField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        tileValueField.setText("0");
+        tileValueField.setEnabled(false);
+        tileValueField.setFocusable(false);
+        tileValueField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tileValueFieldActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -236,12 +251,19 @@ public class FOVDemoPanel extends javax.swing.JPanel {
                     .addComponent(fovComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(losComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(stratComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(clearBox)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(tileValueField, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(clearBox))
+                    .addComponent(stratComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {fovComboBox, losComboBox, stratComboBox});
@@ -258,7 +280,9 @@ public class FOVDemoPanel extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(losComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(clearBox)))
+                    .addComponent(clearBox)
+                    .addComponent(jLabel4)
+                    .addComponent(tileValueField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -295,6 +319,11 @@ public class FOVDemoPanel extends javax.swing.JPanel {
     private void lightFadeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lightFadeButtonActionPerformed
         fadeColorPanel.setBackground(SColorFactory.showSColorChooser(this));
     }//GEN-LAST:event_lightFadeButtonActionPerformed
+
+    private void tileValueFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tileValueFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tileValueFieldActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JPanel castColorPanel;
     public javax.swing.JButton clearBox;
@@ -303,6 +332,7 @@ public class FOVDemoPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -314,5 +344,6 @@ public class FOVDemoPanel extends javax.swing.JPanel {
     public javax.swing.JCheckBox playerCastsLightBox;
     public javax.swing.JSlider radiusSlider;
     private javax.swing.JComboBox stratComboBox;
+    public javax.swing.JTextField tileValueField;
     // End of variables declaration//GEN-END:variables
 }

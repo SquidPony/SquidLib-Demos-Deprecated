@@ -17,8 +17,9 @@ import squidpony.squidcolor.SColorFactory;
 import squidpony.squidgrid.gui.awt.event.SGMouseListener;
 import squidpony.squidgrid.gui.swing.SwingPane;
 import squidpony.squidgrid.los.LOSSolver;
-import squidpony.squidgrid.util.Direction;
-import static squidpony.squidgrid.util.Direction.*;
+import squidpony.squidgrid.util.DirectionCardinal;
+import squidpony.squidgrid.util.DirectionIntercardinal;
+import static squidpony.squidgrid.util.DirectionIntercardinal.*;
 
 /**
  * Demonstrates the use of the Field of View and Line of Sight algorithms.
@@ -64,14 +65,14 @@ public class FieldOfViewDemo {
         "#..................................#.....#...#............#.....#...#.....#AAAuA≈≈≈≈≈≈≈≈≈≈≈AAAAAAAAø",
         "#..................................#.....#...#............#.....#...#.....#AAAA≈≈≈≈≈≈≈≈≈≈≈≈≈AAAAAAAø",
         "#..................................#.....#...####################...#.....#AAAAu≈≈≈≈≈≈≈≈≈≈≈≈≈≈AAAAAø",
-        "#..................................#.....#.......EEEEEEEEEEE........#.....#AAAAuu.≈≈≈≈mmm≈≈≈≈≈AAuAAø",
+        "#............................#.....#.....#.......EEEEEEEEEEE........#.....#AAAAuu.≈≈≈≈mmm≈≈≈≈≈AAuAAø",
         "#..................................#.....#........####.####.........#.....#AAAuuuu≈≈≈≈≈mm≈≈≈≈AAuuAAø",
         "#..................................#.....#..........................#.....#AAAAuuuu≈≈≈≈≈≈≈≈≈AAuuuAAø",
         "#..................................#.....####+#.....##..........###/#.....#AAAAAAAuu..≈≈≈≈≈AAAAuAAAø",
         "#..................................#.....#E.+.#.....##..........#.........#AAAAAAAAA.AAA≈≈AAAAAAAAAø",
-        "#..................................#.....####.#.....##..........#tttt+#...#AAAAAAAA..AAAuuu.uAAAAAAø",
-        "#..................................#.....#E.+.#.....#...........#..c..#...#AAAAAAA....AAAAu..uAAAAAø",
-        "#..................................#.....####.#.....#...........###..E#...#AAAAAA...AAAAAuuu.uAAAAAø",
+        "#............................##.....#.....####.#.....##..........#tttt+#...#AAAAAAAA..AAAuuu.uAAAAAAø",
+        "#...................#..............#.....#E.+.#.....#...........#..c..#...#AAAAAAA....AAAAu..uAAAAAø",
+        "#...................#..............#.....####.#.....#...........###..E#...#AAAAAA...AAAAAuuu.uAAAAAø",
         "#..................................#.....#E.+.#.....#...........#E+.EE#...#AAAAAAAAAAAAAAAAAuuAAAAAø",
         "###########################################################################AAAAAAAAAAAAAAAAAAAAAAAAø"
     };
@@ -80,6 +81,7 @@ public class FieldOfViewDemo {
     private SColor[][] lighting, playerLight;
     private float[][] resistances;
     private boolean[][] clean, lightSource, visible;
+    float[][] visbilityMap;
     private int width = DEFAULT_MAP[0].length(), height = DEFAULT_MAP.length;
     private int cellWidth, cellHeight, locx, locy;
     private LOSSolver los;
@@ -108,6 +110,7 @@ public class FieldOfViewDemo {
         clean = new boolean[width][height];
         lightSource = new boolean[width][height];
         visible = new boolean[width][height];
+        visbilityMap = new float[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 char c = DEFAULT_MAP[y].charAt(x);
@@ -286,7 +289,7 @@ public class FieldOfViewDemo {
         return new DemoCell(resistance, c, color);
     }
 
-    private void move(Direction dir) {
+    private void move(DirectionIntercardinal dir) {
         int x = locx + dir.deltaX;
         int y = locy + dir.deltaY;
 
@@ -314,7 +317,7 @@ public class FieldOfViewDemo {
         if (panel.placeLightSourceBox.isSelected()) {
             lightSource[startx][starty] = true;
         } else {
-            float[][] visbilityMap = panel.getFOVSolver().calculateFOV(resistances, startx, starty, Math.max(width / 2, height / 2));
+            visbilityMap = panel.getFOVSolver().calculateFOV(resistances, startx, starty, Math.max(width / 2, height / 2));
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
                     boolean wasvisible = visible[x][y];
@@ -323,7 +326,6 @@ public class FieldOfViewDemo {
                 }
             }
         }
-
 
         //repaint the level with new light map
         for (int x = 0; x < width; x++) {
@@ -454,7 +456,11 @@ public class FieldOfViewDemo {
 
         @Override
         public void mouseMoved(MouseEvent e) {
-            //nothing special happens
+//            int x = e.getX();
+//            int y = e.getY();
+//            String val = String.format("%.2f", visbilityMap[x][y]);
+//            panel.tileValueField.setText(val);
+//            System.out.println("" + x + ", " + y + " : " + val);
         }
 
         @Override
@@ -471,7 +477,7 @@ public class FieldOfViewDemo {
         public void keyReleased(KeyEvent e) {
         }
 
-        private Direction getDirection(int code) {
+        private DirectionIntercardinal getDirection(int code) {
             switch (code) {
                 case VK_LEFT:
                 case VK_NUMPAD4:
