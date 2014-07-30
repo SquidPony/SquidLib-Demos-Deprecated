@@ -1,7 +1,5 @@
 # Demonstrations for the use of SquidLib
 
-These programs and source are for you to play with and see how the various parts of SquidLib work. They are released under the Apache 2.0 License.
+With the stable alpha release of SquidLib 2, all demos are now in the library's source.
 
-To simply run the demos outside of an IDE, rund SquidLibDemos.jar in the "dist" folder. The source for all these demos is available in the "src" folder.
-
-If you would like additional demos or have any questions, please email me at eben.howard@gmail.com
+This repo is left available for those who are still using SquidLib 1.95, but to access the demos you must checkout the penultimate commit which has all the files.
